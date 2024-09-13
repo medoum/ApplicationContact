@@ -1,5 +1,4 @@
-﻿using Application.UseCase.AddContact.Request;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interface;
 using Infrastructure.Database;
 using System;
