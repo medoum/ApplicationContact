@@ -25,7 +25,7 @@ namespace Infrastructure.Repository.AddContact
                 FirstName = contact.FirstName,
                 LastName = contact.LastName,
                 Email = contact.Email,
-                Tel = contact.Tel,
+                PhoneNumber = contact.PhoneNumber,
             };
 
             _dbContext.contacts.Add(newContact);

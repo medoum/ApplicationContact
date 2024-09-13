@@ -11,6 +11,6 @@ namespace Application.UseCase.AddContact.Request
 
         public string Email { get; set; }
 
-        public string Tel { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
