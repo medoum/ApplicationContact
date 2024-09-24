@@ -1,36 +1,16 @@
 ﻿using Domain.Entities;
 using Domain.Interface;
-using Infrastructure.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.AddContact
 {
     public class AddContactRepository : IAddContactRepository
     {
-        private readonly DbContext _dbContext;
+        public static List<Contact> _contacts = [];
 
-        public AddContactRepository(DbContext dbContext)
+        public Task AddContactAsync(Contact contact)
         {
-            _dbContext = dbContext;
+            _contacts.Add(contact);
+            return Task.CompletedTask;
         }
-
-        public async Task AddContact(Contact contact)
-        {
-            var newContact = new Contact
-            {
-                FirstName = contact.FirstName,
-                LastName = contact.LastName,
-                Email = contact.Email,
-                PhoneNumber = contact.PhoneNumber,
-            };
-
-            _dbContext.contacts.Add(newContact);
-
-        }
-
     }
 }

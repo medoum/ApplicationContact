@@ -10,4 +10,8 @@
     <Folder Include="UseCase\AddContact\Exceptions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
 </Project>
