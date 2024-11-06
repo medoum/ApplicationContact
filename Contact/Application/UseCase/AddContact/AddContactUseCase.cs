@@ -1,4 +1,4 @@
-﻿using Application.UseCase.Interfaces;
+﻿using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interface;
 

@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
 
-namespace Application.UseCase.Interfaces
+namespace Application.Interfaces
 {
     public interface IAddContactUseCase
-    {  
+    {
         Task ExecuteAsync(Contact contact);
     }
 }
