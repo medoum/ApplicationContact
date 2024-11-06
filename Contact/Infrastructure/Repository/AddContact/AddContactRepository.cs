@@ -7,10 +7,10 @@ namespace Infrastructure.Repository.AddContact
     {
         public static List<Contact> _contacts = [];
 
-        public Task AddContactAsync(Contact contact)
+        public  Task AddContactAsync(Contact contact)
         {
-            _contacts.Add(contact);
-            return Task.CompletedTask;
+              _contacts.Add(contact);
+               return Task.CompletedTask;
         }
     }
 }
