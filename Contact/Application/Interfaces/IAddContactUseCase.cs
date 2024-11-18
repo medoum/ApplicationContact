@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.UseCase.AddContact.Request;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {

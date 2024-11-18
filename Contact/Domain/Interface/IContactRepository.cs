@@ -2,7 +2,7 @@
 
 namespace Domain.Interface
 {
-    public interface IAddContactRepository
+    public interface IContactRepository
     {
         Task AddContactAsync(Contact contact);
     }
