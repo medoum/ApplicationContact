@@ -14,9 +14,11 @@ namespace Application.UseCase.AddContact
             _contactRepository = contactRepository;
         }
 
-        public async Task ExecuteAsync(Contact contact)
+        public async Task AddContact(AddContactRequest contactRequest)
         {
+            Contact contact = ContactFactory.CreateContact(contactRequest.FirstName,contactRequest.LastName,contactRequest.PhoneNumber,contactRequest.Email);
             await _contactRepository.AddContactAsync(contact);
         }
     }
 }
+

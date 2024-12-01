@@ -1,60 +1,44 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace Application.UseCase.AddContact.Request
 {
     public class AddContactRequest
     {
         public string FirstName { get; private set; }
-
         public string LastName { get; private set; }
-
         public string Email { get; private set; }
-
         public string PhoneNumber { get; private set; }
 
-
-
-        public AddContactRequest(string firstName, string lastName, string email, string phoneNumber)
+        public static AddContactRequest Create(string firstName, string lastName, string phoneNumber, string email)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            PhoneNumber = phoneNumber;
-        }
+            if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("Le prénom ne peut pas être vide.");
+            if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Le nom ne peut pas être vide.");
+            if (!IsValidEmail(email)) throw new ArgumentException("L'email n'est pas valide.");
+            if (!IsValidPhoneNumber(phoneNumber)) throw new ArgumentException("Le numéro de téléphone n'est pas valide.");
 
-        public void setFirstName(string firstName) 
-        {
-            if (!string.IsNullOrEmpty(firstName)) 
+            return new AddContactRequest
             {
-                FirstName = firstName;
-            }
-        }
-        public void setLastName(string lastName)
-        {
-            if (!string.IsNullOrEmpty(lastName))
-            {
-                LastName = lastName;
-            }
-        }
-        public void setEmail(string email)
-        {
-            if (!string.IsNullOrEmpty(email))
-            {
-                Email = email;
-            }
-        }
-        public void setPhoneNumber(string phoneNumber)
-        {
-            if (!string.IsNullOrEmpty(phoneNumber))
-            {
-                LastName = phoneNumber;
-            }
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                PhoneNumber = phoneNumber
+            };
         }
 
-      
+        private static bool IsValidEmail(string email)
+        {
+            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        }
 
+        private static bool IsValidPhoneNumber(string phoneNumber)
+        {
+            return phoneNumber.All(char.IsDigit);
+        }
     }
 
-   
+
+
 }

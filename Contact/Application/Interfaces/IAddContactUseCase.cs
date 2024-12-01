@@ -5,6 +5,6 @@ namespace Application.Interfaces
 {
     public interface IAddContactUseCase
     {
-        Task ExecuteAsync(Contact contact);
+        Task AddContact(AddContactRequest contactRequest);
     }
 }

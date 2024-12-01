@@ -10,7 +10,6 @@
     <Folder Include="DTOs\" />
     <Folder Include="DI\" />
     <Folder Include="Services\" />
-    <Folder Include="UseCase\AddContact\Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>

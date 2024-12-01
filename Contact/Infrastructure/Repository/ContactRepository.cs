@@ -15,5 +15,6 @@ namespace Infrastructure.Repository
             _contacts.Add(contact);
             return Task.CompletedTask;
         }
+
     }
 }
