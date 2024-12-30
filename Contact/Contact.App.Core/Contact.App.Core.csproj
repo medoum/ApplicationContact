@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Contact\Entity\" />
+    <Folder Include="Contact\Exception\" />
+    <Folder Include="Contact\UseCase\Create\" />
+    <Folder Include="Contact\UseCase\Delete\" />
+    <Folder Include="Contact\UseCase\Detail\" />
+    <Folder Include="Contact\UseCase\Update\" />
+  </ItemGroup>
+
+</Project>

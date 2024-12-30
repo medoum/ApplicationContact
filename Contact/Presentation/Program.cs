@@ -21,6 +21,7 @@ if (choice == "1")
         var email = Console.ReadLine();
 
         // Vérification de l'existence du contact
+        // Dans use case
         var existingContact = ContactRepository._contacts.FirstOrDefault(c =>
             c.FirstName.Equals(firstName, StringComparison.OrdinalIgnoreCase) &&
             c.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase));
@@ -48,7 +49,7 @@ if (choice == "1")
         {
          
             var newContact = ContactFactory.CreateContact(firstName, lastName, phoneNumber, email);
-            
+                                           
             ContactRepository._contacts.Add(newContact);
             Console.WriteLine("Nouveau contact ajouté avec succès.");
         }
