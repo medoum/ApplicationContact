@@ -7,12 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contact\Entity\" />
     <Folder Include="Contact\Exception\" />
-    <Folder Include="Contact\UseCase\Create\" />
-    <Folder Include="Contact\UseCase\Delete\" />
-    <Folder Include="Contact\UseCase\Detail\" />
-    <Folder Include="Contact\UseCase\Update\" />
   </ItemGroup>
 
 </Project>

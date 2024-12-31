@@ -1,20 +1,17 @@
-﻿using Application.UseCase.AddContact.Request;
+﻿using Contact.App.Core.Contact.Repository;
 using Domain.Entities;
-using Domain.Interface;
 
 namespace Infrastructure.Repository
 {
     public class ContactRepository : IContactRepository
     {
-        public static List<Contact> _contacts = [];
+        public static List<ContactDto> _contacts = [];
 
-     
-        public Task AddContactAsync(Contact contact)
+
+        public Task AddContactAsync(ContactDto contact)
         {
-
             _contacts.Add(contact);
             return Task.CompletedTask;
         }
-
     }
 }

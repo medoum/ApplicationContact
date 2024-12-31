@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <Folder Include="DI\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DI\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\Contact.App.Core\Contact.App.Core.csproj" />
   </ItemGroup>
 
 </Project>

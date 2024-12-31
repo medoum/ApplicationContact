@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class Contact
+    public class ContactDto
     {
         public string FirstName { get; set; }
 

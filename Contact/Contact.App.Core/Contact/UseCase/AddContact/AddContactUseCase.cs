@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.UseCase.AddContact.Request;
+using Contact.App.Core.Contact.Repository;
 using Domain.Entities;
-using Domain.Interface;
 
 namespace Application.UseCase.AddContact
 {
@@ -16,7 +16,7 @@ namespace Application.UseCase.AddContact
 
         public async Task AddContact(AddContactRequest contactRequest)
         {
-            Contact contact = ContactFactory.CreateContact(contactRequest.FirstName,contactRequest.LastName,contactRequest.PhoneNumber,contactRequest.Email);
+            ContactDto contact = ContactFactory.CreateContact(contactRequest.FirstName,contactRequest.LastName,contactRequest.PhoneNumber,contactRequest.Email);
             await _contactRepository.AddContactAsync(contact);
         }
     }

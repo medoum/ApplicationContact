@@ -9,6 +9,6 @@ namespace Application.Interfaces
 {
     public interface IGetContactsUsesCase
     {
-        Task<Contact?> GetContactByEmailAsync(string email);
+        Task<ContactDto?> GetContactByEmailAsync(string email);
     }
 }

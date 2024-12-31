@@ -3,10 +3,10 @@
 public class ContactFactory
 {
     
-    public static Contact CreateContact(string firstName, string lastName, string phoneNumber, string email)
+    public static ContactDto CreateContact(string firstName, string lastName, string phoneNumber, string email)
     {
        
-        return new Contact
+        return new ContactDto
         {
             FirstName = firstName,
             LastName = lastName,
