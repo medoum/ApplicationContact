@@ -1,5 +1,5 @@
-﻿using Contact.App.Core.Contact.Repository;
-using Domain.Entities;
+﻿using Contact.App.Core.Contact.Entities;
+using Contact.App.Core.Contact.Repository;
 
 namespace Infrastructure.Repository
 {

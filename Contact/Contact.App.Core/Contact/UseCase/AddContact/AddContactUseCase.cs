@@ -1,8 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.UseCase.AddContact.Request;
+using Contact.App.Core.Contact.Entities;
 using Contact.App.Core.Contact.Repository;
-using Domain.Entities;
-
 namespace Application.UseCase.AddContact
 {
     public class AddContactUseCase : IAddContactUseCase

@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Contact.App.Core.Contact.Entities;
 
 namespace Contact.App.Core.Contact.Repository
 {

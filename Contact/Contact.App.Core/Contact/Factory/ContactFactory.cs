@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Contact.App.Core.Contact.Entities;
 
 public class ContactFactory
 {
