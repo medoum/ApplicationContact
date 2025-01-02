@@ -13,5 +13,10 @@ namespace Infrastructure.Repository
             _contacts.Add(contact);
             return Task.CompletedTask;
         }
+
+        public Task<List<ContactDto>> GetContactsAsync()
+        {
+           return Task.FromResult(_contacts);
+        }
     }
 }

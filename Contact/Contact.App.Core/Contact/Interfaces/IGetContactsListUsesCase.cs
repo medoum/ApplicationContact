@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IGetContactsUsesCase
+    public interface IGetContactsListUsesCase
     {
-        Task<ContactDto?> GetContactByEmailAsync(string email);
+        Task<List<ContactDto>> GetUserAsync();
     }
 }
