@@ -6,5 +6,9 @@ namespace Contact.App.Core.Contact.Repository
     {
         Task AddContactAsync(ContactDto contact);
         Task <List<ContactDto>> GetContactsAsync();
+
+        Task UpdateContactAsync(ContactDto contact);
+
+        Task DeleteContactAsync(string email);
     }
 }

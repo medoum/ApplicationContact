@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contact.App.Core.Contact.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace Application.Interfaces
 {
     public interface IUpdateContactUseCase
     {
+        Task UpdateContactUseCaseAsync(ContactDto contact);
     }
 }
