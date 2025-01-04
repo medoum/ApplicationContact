@@ -4,10 +4,10 @@ namespace Contact.App.Core.Contact.Repository
 {
     public interface IContactRepository
     {
-        Task AddContactAsync(ContactDto contact);
-        Task <List<ContactDto>> GetContactsAsync();
+        Task AddContactAsync(Entities.Contact contact);
+        Task <List<Entities.Contact>> GetContactsAsync();
 
-        Task UpdateContactAsync(ContactDto contact);
+        Task UpdateContactAsync(Entities.Contact contact);
 
         Task DeleteContactAsync(string email);
     }

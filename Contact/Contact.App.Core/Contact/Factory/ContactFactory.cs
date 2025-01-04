@@ -3,10 +3,10 @@
 public class ContactFactory
 {
     
-    public static ContactDto CreateContact(string firstName, string lastName, string phoneNumber, string email)
+    public static Contact.App.Core.Contact.Entities.Contact CreateContact(string firstName, string lastName, string phoneNumber, string email)
     {
        
-        return new ContactDto
+        return new Contact.App.Core.Contact.Entities.Contact
         {
             FirstName = firstName,
             LastName = lastName,

@@ -16,9 +16,9 @@ namespace Contact.App.Tests.Contact
         public async Task GetUserList_ShouldReturnCorrectUserList()
         {
             // Arrange
-            var expectedUsers = new List<ContactDto>
+            var expectedUsers = new List<Core.Contact.Entities.Contact>
         {
-            new ContactDto
+            new Core.Contact.Entities.Contact
             {
                 FirstName = "Med",
                 LastName = "D",
@@ -26,7 +26,7 @@ namespace Contact.App.Tests.Contact
                 PhoneNumber = "123456789",
                
             },
-            new ContactDto
+            new Core.Contact.Entities.Contact
             {
                 FirstName = "Cam",
                 LastName = "Dia",

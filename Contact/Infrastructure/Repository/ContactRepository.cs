@@ -5,10 +5,10 @@ namespace Infrastructure.Repository
 {
     public class ContactRepository : IContactRepository
     {
-        public static List<ContactDto> _contacts = [];
+        public static List<Contact.App.Core.Contact.Entities.Contact> _contacts = [];
 
 
-        public Task AddContactAsync(ContactDto contact)
+        public Task AddContactAsync(Contact.App.Core.Contact.Entities.Contact contact)
         {
             _contacts.Add(contact);
             return Task.CompletedTask;
@@ -26,12 +26,12 @@ namespace Infrastructure.Repository
             return Task.CompletedTask;
         }
 
-        public Task<List<ContactDto>> GetContactsAsync()
+        public Task<List<Contact.App.Core.Contact.Entities.Contact>> GetContactsAsync()
         {
            return Task.FromResult(_contacts);
         }
 
-        public Task UpdateContactAsync(ContactDto contact)
+        public Task UpdateContactAsync(Contact.App.Core.Contact.Entities.Contact contact)
         {
            
             var existingContact = _contacts.FirstOrDefault(u => u.Email == contact.Email);

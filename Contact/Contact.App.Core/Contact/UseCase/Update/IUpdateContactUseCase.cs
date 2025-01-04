@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces
+namespace Contact.App.Core.Contact.UseCase.Update
 {
     public interface IUpdateContactUseCase
     {
-        Task UpdateContactUseCaseAsync(ContactDto contact);
+        Task UpdateContactUseCaseAsync(Entities.Contact contact);
     }
 }
