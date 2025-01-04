@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contact.App.Core.Contact.Entities
 {
-    public class ContactDto
+    public class Contact
     {
         public string FirstName { get; set; }
 

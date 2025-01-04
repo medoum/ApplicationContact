@@ -1,5 +1,5 @@
-﻿using Application.Interfaces;
-using Contact.App.Core.Contact.Repository;
+﻿using Contact.App.Core.Contact.Repository;
+using Contact.App.Core.Contact.UseCase.Delete;
 using System;
 using System.Collections.Generic;
 using System.Linq;

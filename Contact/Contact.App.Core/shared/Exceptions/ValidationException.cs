@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCase.AddContact.Exceptions
+namespace Contact.App.Core.shared.Exceptions
 {
     public class ValidationException : Exception
     {
         public List<ValidationError> _errors { get; }
 
-        public ValidationException(List<ValidationError> errors) 
+        public ValidationException(List<ValidationError> errors)
         {
             _errors = errors;
         }
 
         public ValidationException(string message)
         {
-            _errors =[
+            _errors = [
             new() { Message = message }
         ];
         }

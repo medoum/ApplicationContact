@@ -1,6 +1,6 @@
-﻿using Application.Interfaces;
-using Contact.App.Core.Contact.Entities;
+﻿using Contact.App.Core.Contact.Entities;
 using Contact.App.Core.Contact.Repository;
+using Contact.App.Core.Contact.UseCase.ContactList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Application.UseCase.ContactList
         {
             _repository = repository;
         }
-        public async Task<List<ContactDto>> GetUserAsync()
+        public async Task<List<Contact.App.Core.Contact.Entities.Contact>> GetUserAsync()
         {
             return await _repository.GetContactsAsync();
         }

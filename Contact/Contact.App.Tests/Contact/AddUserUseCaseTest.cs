@@ -1,8 +1,6 @@
 ﻿using Application.UseCase.AddContact;
 using Application.UseCase.AddContact.Request;
-using Contact.App.Core.Contact.Entities;
-using Contact.App.Core.Contact.Repository;
-using Moq;
+using Infrastructure.Repository;
 
 namespace Contact.App.Tests.Contact
 {
@@ -12,38 +10,28 @@ namespace Contact.App.Tests.Contact
         public async Task AddContact_ShouldCallAddUserAsync_WithCorrectUser()
         {
             // Arrange
-            var mockRepo = new Mock<IContactRepository>();
-            var useCase = new AddContactUseCase(mockRepo.Object);
+            var repository = new ContactRepository();
+            var useCase = new AddContactUseCase(repository);
 
-            var request = new AddContactRequest
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "john.doe@example.com",
-                PhoneNumber = "123456789",
-               
-            };
-
-            ContactDto expectedUser = ContactFactory.CreateContact(
-                request.FirstName,
-                request.LastName,
-                request.Email,
-                request.PhoneNumber
-               
-            );
+            var request = AddContactRequest.Create(
+                firstName: "Mohamed",
+                lastName: "Doumbouya",
+                phoneNumber: "4844854565",
+                email: "med@gmail.com"
+                );
 
             // Act
             await useCase.AddContact(request);
 
             // Assert
-            mockRepo.Verify(repo => repo.AddContactAsync(
-                It.Is<ContactDto>(contact =>
-                    contact.FirstName == request.FirstName &&
-                    contact.LastName == request.LastName &&
-                    contact.Email == request.Email &&
-                    contact.PhoneNumber == request.PhoneNumber
-                )
-            ), Times.Once);
+            var contacts = await repository.GetContactsAsync();
+            var addedContact = contacts.FirstOrDefault();
+
+            Assert.NotNull(addedContact); 
+            Assert.Equal(request.FirstName, addedContact.FirstName); 
+            Assert.Equal(request.LastName, addedContact.LastName);
+            Assert.Equal(request.Email, addedContact.Email);
+            Assert.Equal(request.PhoneNumber, addedContact.PhoneNumber);
         }
 
     }

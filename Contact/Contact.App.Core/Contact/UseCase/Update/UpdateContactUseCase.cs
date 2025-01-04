@@ -1,6 +1,6 @@
-﻿using Application.Interfaces;
-using Contact.App.Core.Contact.Entities;
+﻿using Contact.App.Core.Contact.Entities;
 using Contact.App.Core.Contact.Repository;
+using Contact.App.Core.Contact.UseCase.Update;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Application.UseCase.Update
         {
             _contactRepository = contactRepository;
         }
-        public async Task UpdateContactUseCaseAsync(ContactDto contact)
+        public async Task UpdateContactUseCaseAsync(Contact.App.Core.Contact.Entities.Contact contact)
         {
             await _contactRepository.UpdateContactAsync(contact);
         }
