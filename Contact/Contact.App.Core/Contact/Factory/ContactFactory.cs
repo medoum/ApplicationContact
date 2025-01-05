@@ -1,12 +1,12 @@
-﻿using Contact.App.Core.Contact.Entities;
+﻿using Contact.App.Core.Contact.Entity;
 
 public class ContactFactory
 {
     
-    public static Contact.App.Core.Contact.Entities.Contact CreateContact(string firstName, string lastName, string phoneNumber, string email)
+    public static Contact.App.Core.Contact.Entity.Contact CreateContact(string firstName, string lastName, string phoneNumber, string email)
     {
        
-        return new Contact.App.Core.Contact.Entities.Contact
+        return new Contact.App.Core.Contact.Entity.Contact
         {
             FirstName = firstName,
             LastName = lastName,

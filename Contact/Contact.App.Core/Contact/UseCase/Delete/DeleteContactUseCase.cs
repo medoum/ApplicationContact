@@ -1,11 +1,5 @@
 ﻿using Contact.App.Core.Contact.Repository;
 using Contact.App.Core.Contact.UseCase.Delete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Application.UseCase.Delete
 {
     public class DeleteContactUseCase : IDeleteContactUseCase
@@ -16,9 +10,9 @@ namespace Application.UseCase.Delete
         {
             _contactRepository = contactRepository;
         }
-        public async Task DeleteContactUseCaseAsync(string email)
+        public async Task DeleteContactUseCaseAsync(Guid id)
         {
-            await _contactRepository.DeleteContactAsync(email);
+            await _contactRepository.DeleteContactAsync(id);
         }
     }
 }
