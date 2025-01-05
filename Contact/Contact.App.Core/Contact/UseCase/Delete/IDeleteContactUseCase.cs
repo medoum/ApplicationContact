@@ -2,6 +2,6 @@
 {
     public interface IDeleteContactUseCase
     {
-        Task DeleteContactUseCaseAsync(string email);
+        Task DeleteContactUseCaseAsync(Guid Id);
     }
 }

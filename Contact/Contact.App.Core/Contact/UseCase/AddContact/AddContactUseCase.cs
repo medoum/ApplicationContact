@@ -1,5 +1,4 @@
 ﻿using Application.UseCase.AddContact.Request;
-using Contact.App.Core.Contact.Entities;
 using Contact.App.Core.Contact.Repository;
 using Contact.App.Core.Contact.UseCase.AddContact;
 namespace Application.UseCase.AddContact
@@ -15,7 +14,7 @@ namespace Application.UseCase.AddContact
 
         public async Task AddContact(AddContactRequest contactRequest)
         {
-            Contact.App.Core.Contact.Entities.Contact contact = ContactFactory.CreateContact(contactRequest.FirstName, contactRequest.LastName, contactRequest.PhoneNumber, contactRequest.Email);
+            Contact.App.Core.Contact.Entity.Contact contact = ContactFactory.CreateContact(contactRequest.FirstName, contactRequest.LastName, contactRequest.PhoneNumber, contactRequest.Email);
             await _contactRepository.AddContactAsync(contact);
         }
     }
