@@ -11,9 +11,9 @@ namespace Contact.App.Core.Contact.UseCase.GetSingleContact
         {
             _contactRepository = contactRepository;
         }
-        public async Task GetContact(Guid contactId)
+        public async Task<Entity.Contact> GetContact(Guid contactId)
         {
-           await _contactRepository.GetSingleContactAsync(contactId);
+          return await _contactRepository.GetSingleContactAsync(contactId);
         }
     }
 }
