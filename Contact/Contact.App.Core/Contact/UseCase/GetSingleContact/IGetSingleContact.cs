@@ -2,6 +2,6 @@
 {
      public interface IGetSingleContact
      {
-        Task GetContact(Guid contactId);
+        Task<Entity.Contact> GetContact(Guid contactId);
      }
 }
