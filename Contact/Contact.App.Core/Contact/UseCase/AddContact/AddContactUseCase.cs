@@ -12,7 +12,7 @@ namespace Application.UseCase.AddContact
             _contactRepository = contactRepository;
         }
 
-        public async Task AddContact(AddContactRequest contactRequest)
+        public async Task Execute(AddContactRequest contactRequest)
         {
             Contact.App.Core.Contact.Entity.Contact contact = ContactFactory.CreateContact(contactRequest.FirstName, contactRequest.LastName, contactRequest.PhoneNumber, contactRequest.Email);
             await _contactRepository.AddContactAsync(contact);

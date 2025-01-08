@@ -8,6 +8,7 @@ public class ContactFactory
        
         return new Contact.App.Core.Contact.Entity.Contact
         {
+            
             FirstName = firstName,
             LastName = lastName,
             PhoneNumber = phoneNumber,
