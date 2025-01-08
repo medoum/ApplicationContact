@@ -22,7 +22,7 @@ namespace Contact.App.Tests.Contact
                 );
 
             // Act
-            await useCase.AddContact(request);
+            await useCase.Execute(request);
 
             // Assert
             var contacts = await repository.GetContactsAsync();
