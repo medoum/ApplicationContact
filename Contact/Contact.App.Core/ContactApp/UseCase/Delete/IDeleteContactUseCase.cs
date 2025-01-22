@@ -1,4 +1,4 @@
-﻿namespace Contact.App.Core.Contact.UseCase.Delete
+﻿namespace ContactApp.App.Core.Contact.UseCase.Delete
 {
     public interface IDeleteContactUseCase
     {

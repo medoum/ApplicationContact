@@ -1,6 +1,6 @@
 ﻿
 
-namespace Contact.App.Core.Contact.UseCase.Update
+namespace ContactApp.App.Core.Contact.UseCase.Update
 {
     public interface IUpdateContactUseCase
     {
