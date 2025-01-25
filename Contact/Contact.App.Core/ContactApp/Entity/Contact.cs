@@ -1,53 +1,91 @@
-﻿using System.Security.Cryptography;
+﻿namespace Contact.App.Core.ContactApp.Entity;
 
-namespace ContactApp.App.Core.Contact.Entity
+using System;
+
+public class Contact
 {
-    public class Contact
+    private Guid _id;
+    private string _firstName;
+    private string _lastName;
+    private string _email;
+    private string _phoneNumber;
+    private string _additionalPhoneNumber;
+
+    private Contact(string firstName, string lastName, string email, string phoneNumber)
     {
-        private Guid Id;
-        private string FirstName;
+        _id = Guid.NewGuid(); 
+        _firstName = firstName;
+        _lastName = lastName;
+        _email = email;
+        _phoneNumber = phoneNumber;
 
-        private string LastName;
 
-        private string PhoneNumber;
+    }
 
-        private string Email;
+    public Guid GetId()
+    {
+        return _id;
+    }
 
-        private Contact(Guid id, string firstName, string lastName, string phoneNumber, string email)
+    public string GetFirstName()
+    {
+        return _firstName;
+    }
+    public void SetFirstName(string firstName)
+    {
+        if (!string.IsNullOrEmpty(firstName))
         {
-            Id = id;
-            FirstName = firstName;
-            LastName = lastName;
-            PhoneNumber = phoneNumber;
-            Email = email;
-        }
-
-        public Guid GetId()
-        {
-            return Id;
-        }
-        public string GetFirsName()
-        {
-            return FirstName;
-        }
-
-        public string GetLastName()
-        {
-            return LastName;
-        }
-        public string GetPhoneNumber()
-        {
-            return PhoneNumber;
-        }
-
-        public string GetEmail()
-        {
-            return Email;
-        }
-
-        public static Contact CreateContact(Guid id, string firstName, string lastName, string phoneNumber, string email)
-        {
-            return new Contact(id, firstName, lastName, phoneNumber,email);
+            _firstName = firstName;
         }
     }
-}
+    public string GetLastName()
+    {
+        return _lastName;
+    }
+    public void SetLastName(string lastName)
+    {
+        if (!string.IsNullOrEmpty(lastName))
+        {
+            _lastName = lastName;
+        }
+    }
+    public string GetEmail()
+    {
+        return _email;
+    }
+    public void SetEmail(string email)
+    {
+        if (!string.IsNullOrEmpty(email))
+        {
+            _email = email;
+        }
+    }
+    public string GetPhoneNumber()
+    {
+        return _phoneNumber;
+    }
+    public void SetPhoneNumber(string phoneNumber)
+    {
+        if (!string.IsNullOrEmpty(phoneNumber))
+        {
+            _phoneNumber = phoneNumber;
+        }
+    }
+    public string GetAdditionalPhoneNumber()
+    {
+        return _additionalPhoneNumber;
+    }
+
+    public void SetAdditionalPhoneNumber(string additionalPhoneNumber)
+    {
+        if (!string.IsNullOrEmpty(additionalPhoneNumber))
+        {
+            _additionalPhoneNumber = additionalPhoneNumber;
+        }
+    }
+    public static Contact CreateContact(string firstName, string lastName, string phoneNumber, string email)
+     {
+            return new Contact(firstName, lastName, phoneNumber,email);
+     }
+    }
+

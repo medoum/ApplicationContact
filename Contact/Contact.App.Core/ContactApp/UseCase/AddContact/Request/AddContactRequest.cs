@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Application.UseCase.AddContact.Request
 {
     public class AddContactRequest
     {
-        Guid id;
+        
         public string FirstName;
         public string LastName;
         public string Email;
@@ -14,7 +12,7 @@ namespace Application.UseCase.AddContact.Request
 
         private AddContactRequest() { }
 
-        public static AddContactRequest Create(Guid id,string firstName, string lastName, string phoneNumber, string email)
+        public static AddContactRequest Create(Guid id, string firstName, string lastName, string phoneNumber, string email)
         {
             if (string.IsNullOrWhiteSpace(firstName))
                 throw new ArgumentException("Le prénom ne peut pas être vide.", nameof(firstName));
@@ -27,7 +25,7 @@ namespace Application.UseCase.AddContact.Request
 
             return new AddContactRequest
             {
-                id = id,
+              
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,

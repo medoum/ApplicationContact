@@ -1,9 +1,9 @@
 ﻿
 
-namespace ContactApp.App.Core.Contact.UseCase.Update
-{
+namespace Contact.App.Core.ContactApp.Entity;
+
     public interface IUpdateContactUseCase
     {
-        Task UpdateContactUseCaseAsync(Entity.Contact contact);
+        Task UpdateContactUseCaseAsync(Contact contact);
     }
-}
+
