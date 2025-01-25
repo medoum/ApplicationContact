@@ -1,9 +1,9 @@
 ﻿
 
-namespace ContactApp.App.Core.Contact.UseCase.ContactList
-{
+namespace Contact.App.Core.ContactApp.Entity;
+
     public interface IGetContactsListUsesCase
     {
-        Task<List<Entity.Contact>> GetUserAsync();
+        Task<List<Contact>> GetUserAsync();
     }
-}
+
