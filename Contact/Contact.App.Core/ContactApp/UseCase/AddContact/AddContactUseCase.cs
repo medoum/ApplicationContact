@@ -1,6 +1,7 @@
 ﻿using Application.UseCase.AddContact.Request;
-using Contact.App.Core.Contact.Repository;
-using Contact.App.Core.Contact.UseCase.AddContact;
+using ContactApp;
+using ContactApp.App.Core.Contact.Entity;
+using ContactApp.App.Core.Contact.UseCase.AddContact;
 namespace Application.UseCase.AddContact
 {
     public class AddContactUseCase : IAddContactUseCase
@@ -14,7 +15,17 @@ namespace Application.UseCase.AddContact
 
         public async Task Execute(AddContactRequest contactRequest)
         {
-            Contact.App.Core.Contact.Entity.Contact contact = ContactFactory.CreateContact(contactRequest.FirstName, contactRequest.LastName, contactRequest.PhoneNumber, contactRequest.Email);
+            if (contactRequest == null)
+                throw new ArgumentNullException(nameof(contactRequest));
+
+            var contact = Contact.CreateContact(
+                Guid.NewGuid(),
+                contactRequest.FirstName,
+                contactRequest.LastName,
+                contactRequest.PhoneNumber,
+                contactRequest.Email
+            );
+
             await _contactRepository.AddContactAsync(contact);
         }
     }

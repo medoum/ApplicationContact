@@ -1,6 +1,6 @@
 ﻿
 
-namespace Contact.App.Core.Contact.UseCase.ContactList
+namespace ContactApp.App.Core.Contact.UseCase.ContactList
 {
     public interface IGetContactsListUsesCase
     {

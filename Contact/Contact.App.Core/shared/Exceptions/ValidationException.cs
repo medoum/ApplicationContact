@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contact.App.Core.shared.Exceptions
+namespace ContactApp.App.Core.shared.Exceptions
 {
     public class ValidationException : Exception
     {

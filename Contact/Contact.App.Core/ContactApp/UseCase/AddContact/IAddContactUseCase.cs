@@ -1,6 +1,6 @@
 ﻿using Application.UseCase.AddContact.Request;
 
-namespace Contact.App.Core.Contact.UseCase.AddContact
+namespace ContactApp.App.Core.Contact.UseCase.AddContact
 {
     public interface IAddContactUseCase
     {
