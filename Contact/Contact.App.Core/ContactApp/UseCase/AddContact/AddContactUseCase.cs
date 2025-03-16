@@ -2,12 +2,6 @@
 using ContactApp.App.Core.Contact.UseCase.AddContact;
 namespace Contact.App.Core.ContactApp.Entity;
 
-public enum ContactAction
-{
-    Remplacer,
-    Coupler,
-    Annuler
-}
 
 public class AddContactUseCase : IAddContactUseCase
 {
@@ -18,46 +12,17 @@ public class AddContactUseCase : IAddContactUseCase
         _contactRepository = contactRepository;
     }
 
-    public async Task Execute(AddContactRequest contactRequest, ContactAction action)
+    public async Task Execute(AddContactRequest contactRequest)
     {
-        if (contactRequest == null)
-            throw new ArgumentNullException(nameof(contactRequest));
-        Guid guid = Guid.NewGuid();
-        var existingContact = await _contactRepository.GetSingleContactAsync(guid);
+        if (string.IsNullOrEmpty(contactRequest.PhoneNumber))
+            throw new ArgumentNullException(nameof(contactRequest.PhoneNumber));
 
-        if (existingContact != null)
-        {
-            switch (action)
-            {
-                case ContactAction.Remplacer:
-                    existingContact.SetFirstName(contactRequest.FirstName);
-                    existingContact.SetLastName(contactRequest.LastName);
-                    existingContact.SetPhoneNumber(contactRequest.PhoneNumber);
-                    await _contactRepository.UpdateContactAsync(existingContact); 
-                    break;
-
-                case ContactAction.Coupler:
-                    existingContact.SetAdditionalPhoneNumber(contactRequest.PhoneNumber);
-                    await _contactRepository.UpdateContactAsync(existingContact); 
-                    break;
-                    
-                case ContactAction.Annuler:
-                    return;
-
-                default:
-                    throw new ArgumentException("Action non valide", nameof(action));
-            }
-        }
-        else
-        {
-            var contact = Contact.CreateContact(
-                contactRequest.FirstName,
-                contactRequest.LastName,
-                contactRequest.PhoneNumber,
-                contactRequest.Email
-            );
-
-            await _contactRepository.AddContactAsync(contact);
-        }
+        var contact = Contact.CreateContact(
+            contactRequest.FirstName,
+            contactRequest.LastName,
+            contactRequest.PhoneNumber,
+            contactRequest.Email
+        );
+        await _contactRepository.AddContactAsync(contact);
     }
 }
