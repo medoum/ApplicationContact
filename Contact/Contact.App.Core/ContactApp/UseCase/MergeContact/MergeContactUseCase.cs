@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.UseCase.AddContact.Request;
 

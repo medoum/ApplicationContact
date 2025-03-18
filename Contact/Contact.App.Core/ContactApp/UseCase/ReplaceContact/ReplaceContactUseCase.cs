@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.UseCase.AddContact.Request;
-using Contact.App.Core.ContactApp.Entity;
+﻿using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.UseCase.AddContact.Request;
 
 namespace Contact.App.Core.ContactApp.UseCase.ReplaceContact
@@ -16,7 +10,7 @@ namespace Contact.App.Core.ContactApp.UseCase.ReplaceContact
         {
             _contactRepository = contactRepository;
         }
-        public async Task RemplacerContact(ReplaceContactRequest request)
+        public async Task Execute(ReplaceContactRequest request)
         {
 
             var existingContact = await _contactRepository.GetSingleContactAsync(request.contactId);

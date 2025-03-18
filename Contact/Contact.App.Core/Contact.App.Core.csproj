@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ContactApp\Exception\" />
+    <Compile Remove="ContactApp\Exception\**" />
+    <EmbeddedResource Remove="ContactApp\Exception\**" />
+    <None Remove="ContactApp\Exception\**" />
   </ItemGroup>
 
 </Project>

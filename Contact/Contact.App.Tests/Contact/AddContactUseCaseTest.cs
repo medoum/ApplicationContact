@@ -1,34 +1,36 @@
 ﻿using Application.UseCase.AddContact.Request;
-namespace Contact.App.Core.ContactApp.Entity;
+using Contact.App.Core.ContactApp.Entity;
 
-    public class AddContactUseCaseTest
+namespace Contact.App.Tests.Contact;
+
+public class AddContactUseCaseTest
+{
+    [Fact]
+    public async Task AddContact_Should_not_be_null()
     {
-        [Fact]
-        public async Task AddContact_Should_not_be_null()
-        {
         // Arrange
         var repository = new ContactRepository();
         var addContactService = new AddContactUseCase(repository);
-        
+
 
         var result = AddContactRequest.Create(
-                id: Guid.NewGuid(),  
+                id: Guid.NewGuid(),
                 firstName: "Mohamed",
                 lastName: "Doumbouya",
                 phoneNumber: "4844854565",
                 email: "med@gmail.com"
             );
 
-            // Act
-            await addContactService.Execute(result); 
+        // Act
+        await addContactService.Execute(result);
 
-            // Assert
-            Assert.NotNull(result);
-       
+        // Assert
+        Assert.NotNull(result);
 
-        }
 
-   
+    }
+
+
 
 }
 
