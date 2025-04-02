@@ -14,8 +14,9 @@ public class AddContactUseCase : IAddContactUseCase
 
     public async Task Execute(AddContactRequest contactRequest)
     {
-        if (string.IsNullOrEmpty(contactRequest.PhoneNumber))
-            throw new ArgumentNullException(nameof(contactRequest.PhoneNumber));
+
+        //if (string.IsNullOrEmpty(contactRequest.PhoneNumber))
+        //    throw new ArgumentNullException(nameof(contactRequest.PhoneNumber));
 
         var contact = Contact.CreateContact(
             contactRequest.FirstName,
