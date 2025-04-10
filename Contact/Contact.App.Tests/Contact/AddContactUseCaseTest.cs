@@ -1,72 +1,111 @@
 ﻿using Application.UseCase.AddContact.Request;
-using Contact.App.Core.ContactApp.Entity;
-using System;
-using System.Threading.Tasks;
-using Xunit;
+
 
 namespace Contact.App.Tests.Contact;
 
 public class AddContactUseCaseTest
 {
+ 
     [Fact]
-    public async Task AddContact_Should_not_be_null()
+    public Task AddContactShouldThrowExceptionWhenFirstNameIsEmpty()
     {
-        // Arrange
-        var repository = new ContactRepository();
-        var addContactService = new AddContactUseCase(repository);
-        var result = AddContactRequest.Create(
-                id: Guid.NewGuid(),
-                firstName: "",
+
+        try
+        {
+            var request = AddContactRequest.Create(
+
+           firstName: "",
+           lastName: "Doumbouya",
+           phoneNumber: "4844854565",
+           email: "med@gmail.com"
+       );
+         
+        }
+
+        catch (Exception e)
+        {
+
+            Assert.Equal("Le prenom ne peut pas etre vide.", e.Message);
+
+        }
+
+        return Task.CompletedTask;
+    }
+    [Fact]
+    public Task AddContactShouldThrowExceptionWhenLastNameIsEmpty()
+    {
+      
+      
+        try
+        {
+            var request = AddContactRequest.Create(
+
+           firstName: "Mohamed",
+           lastName: "",
+           phoneNumber: "4844854565",
+           email: "med@gmail.com"
+
+       );
+
+        }
+
+        catch (ArgumentException e)
+        {
+
+            Assert.Equal("le nom ne peut pas etre vide", e.Message);
+
+        }
+
+        return Task.CompletedTask;
+    }
+
+
+    [Fact]
+    public Task AddContactShouldThrowExceptionWhenPhoneNumberIsEmpty()
+    {
+
+        try
+        {
+            var request = AddContactRequest.Create(
+
+           firstName: "Mohamed",
+           lastName: "Doumbouya",
+           phoneNumber: "",
+           email: "med@gmail.com"
+
+       );
+
+        }
+
+        catch (ArgumentException e)
+        {
+
+
+            Assert.Equal("le numero ne peut pas etre vide", e.Message);
+
+        }
+
+        return Task.CompletedTask;
+    }
+
+    [Fact]
+    public Task AddContactShouldThrowExceptionWhenEmailIsEmpty()
+    {
+        var exception = Assert.Throws<ArgumentException>(() =>
+        {
+            var request = AddContactRequest.Create(
+                firstName: "Mohamed",
                 lastName: "Doumbouya",
-                phoneNumber: "4844854565",
-                email: "med@gmail.com"
+                phoneNumber: "0548488",
+                email: ""
             );
-        // Act
-        await addContactService.Execute(result);
-        // Assert
-        Assert.NotNull(result);
+        });
+
+        Assert.Equal("L'email n'est pas valide.", exception.Message);
+
+        return Task.CompletedTask;
     }
 
-   
 
-    [Fact]
-    public async Task AddContact_With_Invalid_Email_Should_Throw_Exception()
-    {
-        // Arrange
-        var repository = new ContactRepository();
-        var addContactService = new AddContactUseCase(repository);
 
-        // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() =>
-            addContactService.Execute(AddContactRequest.Create(
-                id: Guid.NewGuid(),
-                 firstName: "Mohamed",
-                lastName: "Doumbouya",
-                phoneNumber: "4844854565",
-                email: "med@gmail"
-            ))
-        );
-    }
-
-    [Fact]
-    public async Task AddContact_With_Empty_FirstName_Should_Throw_Exception()
-    {
-        // Arrange
-        var repository = new ContactRepository();
-        var addContactService = new AddContactUseCase(repository);
-
-        // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() =>
-            addContactService.Execute(AddContactRequest.Create(
-                id: Guid.NewGuid(),
-                 firstName: "Mohamed",
-                lastName: "Doumbouya",
-                phoneNumber: "4844854565",
-                email: "med@gmail.com"
-            ))
-        );
-    }
-
-   
-   
 }
