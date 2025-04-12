@@ -10,8 +10,6 @@ namespace Application.UseCase.AddContact.Request
         public string Email;
         public string PhoneNumber;
 
-        private AddContactRequest() { }
-
         public static AddContactRequest Create(string firstName, string lastName, string phoneNumber, string email)
         {
             if (string.IsNullOrWhiteSpace(firstName))

@@ -12,7 +12,7 @@ public class AddContactUseCase : IAddContactUseCase
         _contactRepository = contactRepository;
     }
 
-    public async Task Execute(AddContactRequest contactRequest)
+    public async Task<Guid> Execute(AddContactRequest contactRequest)
     {
 
         var contact = Contact.CreateContact(
@@ -23,5 +23,6 @@ public class AddContactUseCase : IAddContactUseCase
             contactRequest.Email
         );
         await _contactRepository.AddContactAsync(contact);
+        return contact.GetId();
     }
 }
