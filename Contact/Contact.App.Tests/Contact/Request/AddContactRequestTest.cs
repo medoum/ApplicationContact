@@ -1,6 +1,5 @@
 ﻿using Application.UseCase.AddContact.Request;
-using Xunit;
-
+using Contact.App.Tests.Contact.Shared;
 namespace Contact.App.Tests.Contact.Request
 {
     public class AddContactRequestTest
@@ -16,8 +15,7 @@ namespace Contact.App.Tests.Contact.Request
                     email: "med@gmail.com"
                 )
             );
-
-            Assert.Equal("Le prenom ne peut pas être vide.", exception.Message);
+            Assert.Equal(ErrorMessage.FirstNameEmpty, exception.Message);
         }
 
         [Fact]
@@ -32,7 +30,7 @@ namespace Contact.App.Tests.Contact.Request
                 )
             );
 
-            Assert.Equal("Le nom ne peut pas être vide.", exception.Message);
+            Assert.Equal(ErrorMessage.LastNameEmpty, exception.Message);
         }
 
         [Fact]
@@ -47,7 +45,7 @@ namespace Contact.App.Tests.Contact.Request
                 )
             );
 
-            Assert.Equal("Le numéro de téléphone n'est pas valide.", exception.Message);
+            Assert.Equal(ErrorMessage.PhoneNumberEmpty, exception.Message);
         }
 
         [Fact]
@@ -62,7 +60,7 @@ namespace Contact.App.Tests.Contact.Request
                 )
             );
 
-            Assert.Equal("L'email n'est pas valide.", exception.Message);
+            Assert.Equal(ErrorMessage.EmailEmpty, exception.Message);
         }
     }
 }

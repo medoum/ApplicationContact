@@ -14,7 +14,7 @@ public class AddContactUseCase : IAddContactUseCase
 
     public async Task<Guid> Execute(AddContactRequest contactRequest)
     {
-
+        // gerer le cas ou le contact existe
         var contact = Contact.CreateContact(
             
             contactRequest.FirstName,
