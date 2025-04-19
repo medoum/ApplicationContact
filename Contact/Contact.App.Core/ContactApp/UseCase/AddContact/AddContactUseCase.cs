@@ -1,5 +1,6 @@
 ﻿using Application.UseCase.AddContact.Request;
 using ContactApp.App.Core.Contact.UseCase.AddContact;
+using ContactApp.App.Core.shared.Exceptions;
 namespace Contact.App.Core.ContactApp.Entity;
 
 
@@ -14,7 +15,12 @@ public class AddContactUseCase : IAddContactUseCase
 
     public async Task<Guid> Execute(AddContactRequest contactRequest)
     {
-        // gerer le cas ou le contact existe
+        var existingContact = await _contactRepository.GetSingleContactAsync(contactRequest.ContactId);
+
+        if(existingContact != null)
+        {
+            throw new InvalidOperationException(InvalidError.ContactAlreadyExists);
+        }
         var contact = Contact.CreateContact(
             
             contactRequest.FirstName,

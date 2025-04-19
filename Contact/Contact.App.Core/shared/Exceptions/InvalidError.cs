@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ContactApp.App.Core.shared.Exceptions
 {
-    public class ValidationError
+    public static class InvalidError
     {
-        public string Message { get; set; }
+        public const string ContactAlreadyExists = "Un contact avec cet email ou numéro de téléphone existe déjà";
     }
 }

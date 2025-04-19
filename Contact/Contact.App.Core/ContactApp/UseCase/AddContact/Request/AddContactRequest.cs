@@ -4,7 +4,7 @@ namespace Application.UseCase.AddContact.Request
 {
     public class AddContactRequest
     {
-        
+        public Guid ContactId { get; set; }
         public string FirstName;
         public string LastName;
         public string Email;
