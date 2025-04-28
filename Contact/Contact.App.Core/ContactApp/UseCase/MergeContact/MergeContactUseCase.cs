@@ -13,9 +13,7 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
         }
         public async Task Execute(MergeContactRequest request)
         {
-            //if (string.IsNullOrEmpty(request.PhoneNumber))
-            //    throw new ArgumentNullException(nameof(request.PhoneNumber));
-
+        
             var existingContact = await _contactRepository.GetSingleContactAsync(request.contactId);
             if (existingContact == null)
                 throw new InvalidOperationException($"Contact avec ID {request.contactId} non trouvé");

@@ -6,6 +6,6 @@ namespace ContactApp.App.Core.Contact.UseCase.AddContact
 {
     public interface IAddContactUseCase
     {
-        Task Execute(AddContactRequest contactRequest);
+        Task<Guid> Execute(AddContactRequest contactRequest);
     }
 }
