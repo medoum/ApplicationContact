@@ -15,7 +15,7 @@ public class AddContactUseCase : IAddContactUseCase
 
     public async Task<Guid> Execute(AddContactRequest contactRequest)
     {
-        var existingContact = await _contactRepository.GetSingleContactAsync(contactRequest.ContactId);
+        var existingContact = await _contactRepository.GetSingleContactAsync(contactRequest.Email, contactRequest.PhoneNumber);
 
         if(existingContact != null)
         {

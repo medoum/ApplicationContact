@@ -1,10 +1,10 @@
-﻿using System.Text.RegularExpressions;
+﻿using Contact.App.Core.Shared;
+using System.Text.RegularExpressions;
 
 namespace Application.UseCase.AddContact.Request
 {
     public class AddContactRequest
     {
-        public Guid ContactId { get; set; }
         public string FirstName;
         public string LastName;
         public string Email;
@@ -13,13 +13,13 @@ namespace Application.UseCase.AddContact.Request
         public static AddContactRequest Create(string firstName, string lastName, string phoneNumber, string email)
         {
             if (string.IsNullOrWhiteSpace(firstName))
-                throw new ArgumentException("Le prenom ne peut pas être vide.");
+                throw new ArgumentException(ErrorMessage.FirstNameEmpty);
             if (string.IsNullOrWhiteSpace(lastName))
-                throw new ArgumentException("Le nom ne peut pas être vide.");
+                throw new ArgumentException(ErrorMessage.LastNameEmpty);
             if (!IsValidEmail(email))
-                throw new ArgumentException("L'email n'est pas valide.");
+                throw new ArgumentException(ErrorMessage.EmailEmpty);
             if (!IsValidPhoneNumber(phoneNumber))
-                throw new ArgumentException("Le numéro de téléphone n'est pas valide.");
+                throw new ArgumentException(ErrorMessage.PhoneNumberEmpty);
 
             return new AddContactRequest
             {

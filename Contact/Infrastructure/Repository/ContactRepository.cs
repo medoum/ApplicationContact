@@ -26,9 +26,9 @@
             return Task.FromResult(_contacts);
         }
 
-        public Task<Contact> GetSingleContactAsync(Guid contactId)
+        public Task<Contact> GetSingleContactAsync(string email, string phoneNumber)
         {
-            var contact = _contacts.FirstOrDefault(c => c.GetId() == contactId);
+            var contact = _contacts.FirstOrDefault(c => c.GetEmail() == email && c.GetAdditionalPhoneNumber() == phoneNumber);
             if (contact != null)
             {
                 return Task.FromResult(contact);

@@ -1,5 +1,5 @@
 ﻿using Application.UseCase.AddContact.Request;
-using Contact.App.Tests.Contact.Shared;
+using Contact.App.Core.Shared;
 namespace Contact.App.Tests.Contact.Request
 {
     public class AddContactRequestTest
