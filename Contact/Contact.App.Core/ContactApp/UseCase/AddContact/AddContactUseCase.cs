@@ -1,6 +1,6 @@
 ﻿using Application.UseCase.AddContact.Request;
 using ContactApp.App.Core.Contact.UseCase.AddContact;
-using ContactApp.App.Core.shared.Exceptions;
+using ContactApp.App.Core.Shared.Exceptions;
 namespace Contact.App.Core.ContactApp.Entity;
 
 

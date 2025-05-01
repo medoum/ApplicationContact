@@ -1,4 +1,4 @@
-﻿namespace ContactApp.App.Core.shared.Exceptions
+﻿namespace ContactApp.App.Core.Shared.Exceptions
 {
     public static class InvalidError
     {

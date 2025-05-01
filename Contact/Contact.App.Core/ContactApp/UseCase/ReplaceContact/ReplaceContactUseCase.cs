@@ -1,5 +1,6 @@
 ﻿using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.UseCase.AddContact.Request;
+using ContactApp.App.Core.Shared.Exceptions;
 
 namespace Contact.App.Core.ContactApp.UseCase.ReplaceContact
 {
@@ -13,9 +14,9 @@ namespace Contact.App.Core.ContactApp.UseCase.ReplaceContact
         public async Task Execute(ReplaceContactRequest request)
         {
 
-            var existingContact = await _contactRepository.GetSingleContactAsync(request.contactId);
+            var existingContact = await _contactRepository.GetSingleContactAsync(request.PhoneNumber, request.Email);
             if (existingContact == null)
-                throw new InvalidOperationException($"Contact avec ID {request.contactId} non trouvé");
+                throw new InvalidOperationException(InvalidError.ContactAlreadyExists);
 
             existingContact.SetFirstName(request.FirstName);
             existingContact.SetLastName(request.LastName);
