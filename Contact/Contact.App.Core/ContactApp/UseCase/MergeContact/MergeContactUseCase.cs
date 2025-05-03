@@ -12,7 +12,7 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
         {
             _contactRepository = contactRepository;
         }
-        public async Task Execute(MergeContactRequest request)
+        public async Task<Guid> Execute(MergeContactRequest request)
         {
 
             var existingContact = await _contactRepository.GetSingleContactAsync(request.PhoneNumber, request.Email);
@@ -21,6 +21,7 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
 
             existingContact.SetAdditionalPhoneNumber(request.PhoneNumber);
             await _contactRepository.UpdateContactAsync(existingContact);
+            return existingContact.GetId();
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Contact.App.Core.ContactApp.UseCase.ReplaceContact
             existingContact.SetFirstName(request.FirstName);
             existingContact.SetLastName(request.LastName);
             existingContact.SetPhoneNumber(request.PhoneNumber);
+            existingContact.SetEmail(request.Email);
             await _contactRepository.UpdateContactAsync(existingContact);
         }
     }
