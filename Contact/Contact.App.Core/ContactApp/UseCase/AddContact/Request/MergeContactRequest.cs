@@ -1,5 +1,6 @@
 ﻿using Contact.App.Core.Shared;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace Contact.App.Core.ContactApp.UseCase.AddContact.Request
 {
@@ -38,7 +39,7 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContact.Request
         {
             return !string.IsNullOrWhiteSpace(phoneNumber) && phoneNumber.All(char.IsDigit);
         }
-
+       
     }
 
 }

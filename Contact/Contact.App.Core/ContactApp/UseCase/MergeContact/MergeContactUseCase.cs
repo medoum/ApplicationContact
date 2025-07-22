@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Contact.App.Core.ContactApp.Entity;
+﻿using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.UseCase.AddContact.Request;
 using ContactApp.App.Core.Shared.Exceptions;
 
@@ -17,31 +15,25 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
 
         public async Task<Guid> Execute(MergeContactRequest request)
         {
-            // recuperation par id
-            var existingContact = await _contactRepository.GetSingleContactAsync(request.PhoneNumber, request.Email);
-           
-            // methode is valid par exemple
-            // plus expressif
-            if (existingContact == null)
+            var existingContact = await _contactRepository.GetSingleContactAsync(request.Email, request.PhoneNumber);
+
+            if (!existingContact.IsValid())
                 throw new InvalidOperationException(InvalidError.ContactAlreadyExists);
 
-            // Mise à jour des informations du contact si nécessaire
-            //Orchestrer dans le model
-            if (existingContact.GetFirstName() != request.FirstName || existingContact.GetLastName() != request.LastName)
-            {
-                existingContact.SetFirstName(request.FirstName);
-                existingContact.SetLastName(request.LastName);
-            }
+            // Orchestration dans le modèle
+            bool hasChanges = existingContact.MergeWith(
+                request.FirstName,
+                request.LastName,
+                request.PhoneNumber,
+                request.Email
+            );
 
-            // Ajout du numéro de téléphone si différent
-            //request 
-            if (!string.IsNullOrEmpty(request.PhoneNumber) && existingContact.GetPhoneNumber() != request.PhoneNumber)
-            {
-                existingContact.SetAdditionalPhoneNumber(request.PhoneNumber);
-            }
+            
+                await _contactRepository.UpdateContactAsync(existingContact);
+            
 
-            await _contactRepository.UpdateContactAsync(existingContact);
             return existingContact.GetId();
         }
+
     }
 }

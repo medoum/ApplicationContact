@@ -78,16 +78,82 @@ public class Contact
         return _additionalPhoneNumber;
     }
 
-    public void SetAdditionalPhoneNumber(string additionalPhoneNumber)
-    {
-        if (!string.IsNullOrEmpty(additionalPhoneNumber))
-        {
-            _additionalPhoneNumber = additionalPhoneNumber;
-        }
-    }
     public static Contact CreateContact(string firstName, string lastName, string phoneNumber, string email)
      {
             return new Contact(firstName, lastName, phoneNumber,email);
      }
+    public bool IsValid()
+    {
+        return _id != Guid.Empty
+            && !string.IsNullOrWhiteSpace(_firstName)
+            && !string.IsNullOrWhiteSpace(_lastName)
+            && !string.IsNullOrWhiteSpace(_email);
     }
+    public bool MergeWith(string firstName, string lastName, string phoneNumber, string email)
+    {
+        bool hasChanges = false;
+
+        if (_firstName != firstName && !string.IsNullOrWhiteSpace(firstName))
+        {
+            _firstName = firstName;
+            hasChanges = true;
+        }
+
+        if (_lastName != lastName && !string.IsNullOrWhiteSpace(lastName))
+        {
+            _lastName = lastName;
+            hasChanges = true;
+        }
+
+        if (_phoneNumber != phoneNumber && !string.IsNullOrWhiteSpace(phoneNumber))
+        {
+            _phoneNumber = phoneNumber;
+            hasChanges = true;
+        }
+
+        if (_email != email && !string.IsNullOrWhiteSpace(email))
+        {
+            _email = email;
+            hasChanges = true;
+        }
+
+
+        return hasChanges;
+    }
+    public bool ReplaceWith(string firstName, string lastName, string phoneNumber, string email)
+    {
+        bool hasChanges = false;
+
+        if (!string.IsNullOrWhiteSpace(firstName) && _firstName != firstName)
+        {
+            _firstName = firstName;
+            hasChanges = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(lastName) && _lastName != lastName)
+        {
+            _lastName = lastName;
+            hasChanges = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(phoneNumber) && _phoneNumber != phoneNumber)
+        {
+            _phoneNumber = phoneNumber;
+            hasChanges = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(email) && _email != email)
+        {
+            _email = email;
+            hasChanges = true;
+        }
+
+    
+
+        return hasChanges;
+    }
+
+
+
+}
 
