@@ -17,7 +17,7 @@ public class AddContactUseCase : IAddContactUseCase
     {
         var existingContact = await _contactRepository.GetSingleContactAsync(contactRequest.Email, contactRequest.PhoneNumber);
 
-        if(existingContact != null)
+        if (existingContact != null && existingContact.IsValid())
         {
             throw new InvalidOperationException(InvalidError.ContactAlreadyExists);
         }

@@ -1,10 +1,12 @@
 ﻿using Contact.App.Core.Shared;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 namespace Application.UseCase.AddContact.Request
 {
     public class AddContactRequest
     {
+
         public string FirstName;
         public string LastName;
         public string Email;
@@ -40,5 +42,7 @@ namespace Application.UseCase.AddContact.Request
         {
             return !string.IsNullOrWhiteSpace(phoneNumber) && phoneNumber.All(char.IsDigit);
         }
+       
+
     }
 }
