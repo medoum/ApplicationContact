@@ -39,8 +39,9 @@ namespace Contact.App.Tests.Contact.UseCases
             Assert.Equal("Doumbouya", addedContact.GetLastName());
             Assert.Equal("mo@gmail.com", addedContact.GetEmail());
             Assert.Equal("0585545", addedContact.GetPhoneNumber());
-             
-              
+            Assert.Equal(resultId, addedContact.GetId());
+
+
         }
     }
 }

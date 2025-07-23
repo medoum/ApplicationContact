@@ -80,7 +80,7 @@ public class Contact
 
     public static Contact CreateContact(string firstName, string lastName, string phoneNumber, string email)
      {
-            return new Contact(firstName, lastName, phoneNumber,email);
+            return new Contact(firstName, lastName, email, phoneNumber);
      }
     public bool IsValid()
     {
