@@ -40,21 +40,7 @@
 
         }
 
-        public Task UpdateContactAsync(Contact contact)
-        {
-
-            var existingContact = _contacts.FirstOrDefault(u => u.GetEmail() == contact.GetEmail());
-            if (existingContact.IsValid())
-            {
-                existingContact.SetFirstName(contact.GetFirstName()); 
-                existingContact.SetLastName(contact.GetLastName());
-                existingContact.SetPhoneNumber(contact.GetPhoneNumber());
-                existingContact.SetEmail(contact.GetEmail());
-            }
-
-            return Task.CompletedTask;
-        }
-
+     
         public Task<Contact> GetSingleContactAsync(string email, string phoneNumber)
         {
             var contact = _contacts.FirstOrDefault(c =>

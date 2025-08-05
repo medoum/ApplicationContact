@@ -18,14 +18,8 @@ namespace Contact.App.Tests.Contact.UseCases
             var repository = new ContactRepository();
             var useCase = new AddContactUseCase(repository);
 
-            var request = new AddContactRequest
-            {
-                FirstName = "Mohamed",
-                LastName = "Doumbouya",
-                Email = "mo@gmail.com",
-                PhoneNumber = "0585545",
-            };
-            
+          
+            var request = AddContactRequest.Create("Mohamed", "Doumbouya", "0585545", "mo@gmail.com");
            
             var resultId = await useCase.Execute(request);
 
