@@ -51,5 +51,10 @@
 
             return Task.FromResult<Contact?>(contact);
         }
+
+        public Task UpdateContactAsync(Contact existingContact)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

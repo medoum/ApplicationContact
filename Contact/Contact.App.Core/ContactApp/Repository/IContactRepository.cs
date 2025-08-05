@@ -8,4 +8,5 @@ public interface IContactRepository
     Task DeleteContactAsync(Guid id);
     Task<Contact> GetContactByIdAsync(Guid id);
     Task<Contact> GetSingleContactAsync(string email, string phoneNumber);
+    Task UpdateContactAsync(Contact existingContact);
 }
