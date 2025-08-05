@@ -1,18 +1,21 @@
 ﻿
 
+using Contact.App.Core.ContactApp.Entity;
+
 namespace Application.UseCase.ContactList
 {
-    //public class GetContactsUseCase : IGetContactsListUsesCase
-    //{
-    //    private readonly IContactRepository _repository;
+    public class GetContactsUseCase : IGetContactsListUsesCase
+    {
+        private readonly IContactRepository _repository;
 
-    //    public GetContactsUseCase(IContactRepository repository)
-    //    {
-    //        _repository = repository;
-    //    }
-    //    public async Task<List<Contact.App.Core.Contact.Entity.Contact>> GetUserAsync()
-    //    {
-    //        return await _repository.GetContactsAsync();
-    //    }
-    //}
+        public GetContactsUseCase(IContactRepository repository)
+        {
+            _repository = repository;
+        }
+
+        async Task<List<Contact.App.Core.ContactApp.Entity.Contact>> IGetContactsListUsesCase.GetUserAsync()
+        {
+            return await _repository.GetContactsAsync();
+        }
+    }
 }

@@ -5,7 +5,6 @@ public interface IContactRepository
 {
     Task AddContactAsync(Contact contact);
     Task<List<Contact>> GetContactsAsync();
-    Task UpdateContactAsync(Contact contact);
     Task DeleteContactAsync(Guid id);
     Task<Contact> GetContactByIdAsync(Guid id);
     Task<Contact> GetSingleContactAsync(string email, string phoneNumber);

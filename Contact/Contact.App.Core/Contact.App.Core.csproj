@@ -12,8 +12,4 @@
     <None Remove="ContactApp\Exception\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ContactApp\Entity\Enum\" />
-  </ItemGroup>
-
 </Project>
