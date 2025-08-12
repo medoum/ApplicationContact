@@ -4,11 +4,10 @@
     {
         private Guid _id;
         private string _name;
-        private List<Guid> _contactIds;
         private int _contactnumbers;
         public ContactGroup(string name,int inititialCount = 0)
         {
-            if(string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Group name cannot be empty");
+          
             _id = Guid.NewGuid();
             _name = name;
             _contactnumbers = inititialCount;
@@ -22,12 +21,8 @@
         {
             return _name;
         }
-        public List<Guid> GetContactIds() 
-        { 
-            return _contactIds;
-        }
-
-        public void setName(string name)
+     
+        public void SetName(string name)
         {
             if (!string.IsNullOrEmpty(name)) 
             { 
@@ -35,17 +30,14 @@
             }
         }
 
-        public int Contactnumbers()
-        {
-            return _contactnumbers;
-        }
+        public int ConttactNumbers => _contactnumbers;
 
-        public void IncrementContactCount()
+        public void AddContact()
         {
             _contactnumbers++;
         }
 
-        public void DecrementContactCount()
+        public void RemoveContact()
         {
             if (_contactnumbers > 0)
             {

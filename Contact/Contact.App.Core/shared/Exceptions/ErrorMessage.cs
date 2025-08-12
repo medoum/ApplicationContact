@@ -10,5 +10,7 @@
 
         public const string PhoneNumberEmpty = "PhoneNumber.Can.Not.Be.Empty";
 
+
+        public const string Name = "GroupName.Can.Not.Be.Empty";
     }
 }

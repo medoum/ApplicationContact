@@ -12,5 +12,7 @@ namespace Contact.App.Core.ContactApp.Repository
         Task DeleteAsync(Guid id);
         Task UpdateAsync(ContactGroup contactGroup);
 
+        Task<ContactGroup> GetSingleContact(string Name);
+
     }
 }
