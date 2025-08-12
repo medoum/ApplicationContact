@@ -29,7 +29,14 @@ namespace Infrastructure.Repository
 
         public Task<ContactGroup> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var contactGroup = _groups.FirstOrDefault( c => c.GetId() == id);
+            return Task.FromResult<ContactGroup>(contactGroup);
+        }
+
+        public Task<ContactGroup> GetSingleContact(string Name)
+        {
+            var contact = _groups.FirstOrDefault(c => c.GetName() == Name);
+            return Task.FromResult<ContactGroup>(contact);
         }
 
         public Task UpdateAsync(ContactGroup contactGroup)
