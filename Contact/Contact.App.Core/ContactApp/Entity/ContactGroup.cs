@@ -30,7 +30,7 @@
             }
         }
 
-        public int ConttactNumbers => _contactnumbers;
+        public int ContactNumbers => _contactnumbers;
 
         public void AddContact()
         {

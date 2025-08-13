@@ -15,7 +15,7 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
         }
         public async Task<Guid> Execute(AddContactGroupRequest request)
         {
-            var existingGroup = _repository.GetSingleContact(request.Name);
+            var existingGroup = await _repository.GetSingleContact(request.Name);
             if (existingGroup != null) 
             {
                 throw new InvalidOperationException(InvalidError.GroupAlreadyExists);
