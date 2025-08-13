@@ -40,7 +40,6 @@
 
         }
 
-     
         public Task<Contact> GetSingleContactAsync(string email, string phoneNumber)
         {
             var contact = _contacts.FirstOrDefault(c =>
