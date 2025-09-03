@@ -21,8 +21,8 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
                 throw new InvalidOperationException(InvalidError.GroupAlreadyExists);
             }
             var group = ContactGroup.createGroupeContact(
-               request.Name,
-               request.Contactnumbers
+               request.Name
+             
             );
             
             await _repository.AddAsync(group);

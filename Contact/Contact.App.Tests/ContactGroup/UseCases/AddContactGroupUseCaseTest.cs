@@ -19,7 +19,7 @@ namespace Contact.App.Tests.ContactGroup.UseCases
             var repository = new ContactGroupRepository();
             var useCase = new AddContactGroupUseCase(repository);
 
-            var request = AddContactGroupRequest.Create("Famille", 5);
+            var request = AddContactGroupRequest.Create("Famille",5);
 
             //Act
             var resultId = await useCase.Execute(request);
