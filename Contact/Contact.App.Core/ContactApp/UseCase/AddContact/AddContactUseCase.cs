@@ -1,4 +1,5 @@
 ﻿using Application.UseCase.AddContact.Request;
+using Contact.App.Core.ContactApp.UseCase.AddContactToGroup;
 using ContactApp.App.Core.Contact.UseCase.AddContact;
 using ContactApp.App.Core.Shared.Exceptions;
 namespace Contact.App.Core.ContactApp.Entity;
@@ -7,10 +8,12 @@ namespace Contact.App.Core.ContactApp.Entity;
 public class AddContactUseCase : IAddContactUseCase
 {
     private readonly IContactRepository _contactRepository;
+    private readonly AddContactToGroupUseCase _addContactToGroupUseCase;
 
-    public AddContactUseCase(IContactRepository contactRepository)
+    public AddContactUseCase(IContactRepository contactRepository, AddContactToGroupUseCase addContactToGroupUseCase)
     {
         _contactRepository = contactRepository;
+        _addContactToGroupUseCase = addContactToGroupUseCase;
     }
 
     public async Task<Guid> Execute(AddContactRequest contactRequest)
@@ -26,9 +29,17 @@ public class AddContactUseCase : IAddContactUseCase
             contactRequest.FirstName,
             contactRequest.LastName,
             contactRequest.PhoneNumber,
-            contactRequest.Email
+            contactRequest.Email,
+            contactRequest.GroupId
+
         );
         await _contactRepository.AddContactAsync(contact);
-        return contact.GetId();
+
+        if (contactRequest.GroupId.HasValue) 
+        {
+            await _addContactToGroupUseCase.Execute(contactRequest.GroupId.Value, contact.GetId());
+        }
+
+          return contact.GetId();
     }
 }

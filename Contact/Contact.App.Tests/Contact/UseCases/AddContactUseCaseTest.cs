@@ -1,5 +1,8 @@
 ﻿using Application.UseCase.AddContact.Request;
 using Contact.App.Core.ContactApp.Entity;
+using Contact.App.Core.ContactApp.UseCase.AddContactGroup;
+using Contact.App.Core.ContactApp.UseCase.AddContactToGroup;
+using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +19,9 @@ namespace Contact.App.Tests.Contact.UseCases
         {
             // Arrange
             var repository = new ContactRepository();
-            var useCase = new AddContactUseCase(repository);
+            var repositoryGroup = new ContactGroupRepository();
+            var contactGroupUse = new AddContactToGroupUseCase(repositoryGroup, repository);
+            var useCase = new AddContactUseCase(repository, contactGroupUse);
 
           
             var request = AddContactRequest.Create("Mohamed", "Doumbouya", "0585545", "mo@gmail.com");
