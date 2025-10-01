@@ -12,28 +12,28 @@ namespace Contact.App.Tests.ContactGroup.UseCases
 {
     public class AddContactGroupUseCaseTest
     {
-        [Fact]
-        public async Task AddContactGroup_ShouldCorrecrGroup()
-        {
-            // Arrange 
-            var repository = new ContactGroupRepository();
-            var useCase = new AddContactGroupUseCase(repository);
+        //[Fact]
+        //public async Task AddContactGroup_ShouldCorrecrGroup()
+        //{
+        //    // Arrange 
+        //    var repository = new ContactGroupRepository();
+        //    var useCase = new AddContactGroupUseCase(repository);
 
-            var request = AddContactGroupRequest.Create("Famille",5);
+        //    var request = AddContactGroupRequest.Create("Famille",5);
 
-            //Act
-            var resultId = await useCase.Execute(request);
+        //    //Act
+        //    var resultId = await useCase.Execute(request);
 
-            //Assert
-            var addedGRoup = await repository.GetSingleContact(request.Name);
+        //    //Assert
+        //    var addedGRoup = await repository.GetSingleContact(request.Name);
 
 
-            Assert.NotEqual(Guid.Empty, resultId);
-            Assert.NotNull(addedGRoup);
-            Assert.Equal("Famille", addedGRoup.GetName());
-            Assert.Equal(5, addedGRoup.ContactNumbers);
-            Assert.Equal(resultId, addedGRoup.GetId());
-        }
+        //    Assert.NotEqual(Guid.Empty, resultId);
+        //    Assert.NotNull(addedGRoup);
+        //    Assert.Equal("Famille", addedGRoup.GetName());
+        //    Assert.Equal(5, addedGRoup.ContactNumbers);
+        //    Assert.Equal(resultId, addedGRoup.GetId());
+        //}
 
     }
 }

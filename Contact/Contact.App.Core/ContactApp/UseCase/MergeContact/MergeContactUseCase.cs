@@ -1,5 +1,6 @@
 ﻿using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.UseCase.AddContact.Request;
+using Contact.App.Core.ContactApp.UseCase.AddContactToGroup;
 using ContactApp.App.Core.Shared.Exceptions;
 
 namespace Contact.App.Core.ContactApp.UseCase.MergeContact
@@ -7,10 +8,11 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
     public class MergeContactUseCase
     {
         private readonly IContactRepository _contactRepository;
-
-        public MergeContactUseCase(IContactRepository contactRepository)
+        private readonly AddContactToGroupUseCase _addContactToGroupUseCase;
+        public MergeContactUseCase(IContactRepository contactRepository, AddContactToGroupUseCase addContactToGroupUseCase)
         {
             _contactRepository = contactRepository;
+            _addContactToGroupUseCase = addContactToGroupUseCase;
         }
 
         public async Task<Guid> Execute(MergeContactRequest request)
@@ -28,9 +30,11 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
                 request.Email
             );
 
-            
                 await _contactRepository.UpdateContactAsync(existingContact);
-            
+            if (request.GroupId.HasValue)
+            {
+                await _addContactToGroupUseCase.Execute(request.GroupId.Value, existingContact.GetId());
+            }
 
             return existingContact.GetId();
         }

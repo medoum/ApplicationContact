@@ -12,7 +12,7 @@ namespace Application.UseCase.AddContact.Request
         public string Email;
         public string PhoneNumber;
         public Guid? GroupId;
-        public static AddContactRequest Create(string firstName, string lastName, string phoneNumber, string email)
+        public static AddContactRequest Create(Guid GroupId,string firstName, string lastName, string phoneNumber, string email)
         {
             if (string.IsNullOrWhiteSpace(firstName))
                 throw new ArgumentException(ErrorMessage.FirstNameEmpty);

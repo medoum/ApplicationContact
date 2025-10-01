@@ -14,5 +14,6 @@ namespace Contact.App.Core.ContactApp.Repository
 
         Task<ContactGroup> GetSingleContact(string Name);
 
+
     }
 }

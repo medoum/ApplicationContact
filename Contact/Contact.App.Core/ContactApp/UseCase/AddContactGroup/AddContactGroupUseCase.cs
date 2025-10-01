@@ -1,32 +1,26 @@
 ﻿using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.Repository;
-using Contact.App.Core.ContactApp.UseCase.AddContactGroup.Request;
-using ContactApp.App.Core.Shared.Exceptions;
+
 
 namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
 {
     public class AddContactGroupUseCase : IAddContactGroup
     {
-        private readonly IContactGRoupRepository _repository;
+     
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AddContactGroupUseCase(IContactGRoupRepository repository)
+        public AddContactGroupUseCase( IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+          
+            _unitOfWork = unitOfWork;
         }
-        public async Task<Guid> Execute(AddContactGroupRequest request)
+
+        public async Task Execute(Entity.Contact contact,ContactGroup group)
         {
-            var existingGroup = await _repository.GetSingleContact(request.Name);
-            if (existingGroup != null) 
-            {
-                throw new InvalidOperationException(InvalidError.GroupAlreadyExists);
-            }
-            var group = ContactGroup.createGroupeContact(
-               request.Name
-             
-            );
-            
-            await _repository.AddAsync(group);
-            return group.GetId();
+            _unitOfWork.Contacts.AddContactAsync(contact);
+            _unitOfWork.ContactGroups.AddAsync(group);
+
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

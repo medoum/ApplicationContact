@@ -1,4 +1,6 @@
-﻿namespace Contact.App.Core.ContactApp.Entity
+﻿using Contact.App.Core.ContactApp.Repository;
+
+namespace Contact.App.Core.ContactApp.Entity
 {
     public class ContactRepository : IContactRepository
     {

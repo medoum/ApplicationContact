@@ -1,7 +1,6 @@
 ﻿namespace Contact.App.Core.ContactApp.Entity;
 
 using System;
-using System.Text.RegularExpressions;
 
 public class Contact
 {
