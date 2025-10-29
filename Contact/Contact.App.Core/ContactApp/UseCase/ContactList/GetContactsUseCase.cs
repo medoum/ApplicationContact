@@ -1,6 +1,7 @@
 ﻿
 
 using Contact.App.Core.ContactApp.Entity;
+using Contact.App.Core.ContactApp.Repository;
 
 namespace Application.UseCase.ContactList
 {

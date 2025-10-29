@@ -1,13 +1,14 @@
 ﻿
+using Contact.App.Core.ContactApp.Repository;
 using Contact.App.Core.ContactApp.UseCase.Delete;
 
 namespace Application.UseCase.Delete
 {
     public class DeleteContactUseCase : IDeleteContactUseCase
     {
-        private readonly Contact.App.Core.ContactApp.Entity.IContactRepository _contactRepository;
+        private readonly IContactRepository _contactRepository;
 
-        public DeleteContactUseCase(Contact.App.Core.ContactApp.Entity.IContactRepository contactRepository)
+        public DeleteContactUseCase(IContactRepository contactRepository)
         {
             _contactRepository = contactRepository;
         }

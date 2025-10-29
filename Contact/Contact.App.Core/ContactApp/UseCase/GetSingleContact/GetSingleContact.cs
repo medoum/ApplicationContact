@@ -1,4 +1,5 @@
 ﻿using Contact.App.Core.ContactApp.Entity;
+using Contact.App.Core.ContactApp.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

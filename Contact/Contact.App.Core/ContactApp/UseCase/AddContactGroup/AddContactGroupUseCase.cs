@@ -8,17 +8,26 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
     {
      
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IContactRepository _contactRepository;
 
-        public AddContactGroupUseCase( IUnitOfWork unitOfWork)
+        public AddContactGroupUseCase( IUnitOfWork unitOfWork, IContactRepository contactRepository)
         {
           
             _unitOfWork = unitOfWork;
+            _contactRepository = contactRepository; 
         }
 
-        public async Task Execute(Entity.Contact contact,ContactGroup group)
+        public async Task Execute(Entity.Contact contact, ContactGroup group)
         {
-            _unitOfWork.Contacts.AddContactAsync(contact);
-            _unitOfWork.ContactGroups.AddAsync(group);
+          
+            await _contactRepository.AddContactAsync(
+                contact.GetFirstName(),
+                contact.GetLastName(),
+                contact.GetEmail(),
+                contact.GetPhoneNumber(),
+                group.GetId()
+            );
+
 
             await _unitOfWork.SaveChangesAsync();
         }
