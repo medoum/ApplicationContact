@@ -1,34 +1,42 @@
 ﻿using Application.UseCase.AddContact.Request;
+using Contact.App.Core.ContactApp.Repository;
 using ContactApp.App.Core.Contact.UseCase.AddContact;
-using ContactApp.App.Core.Shared.Exceptions;
-namespace Contact.App.Core.ContactApp.Entity;
 
-
-public class AddContactUseCase : IAddContactUseCase
+namespace Contact.App.Core.ContactApp.Entity
 {
-    private readonly IContactRepository _contactRepository;
 
-    public AddContactUseCase(IContactRepository contactRepository)
+
+    public class AddContactUseCase : IAddContactUseCase
     {
-        _contactRepository = contactRepository;
-    }
+  
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IContactRepository _repository;
 
-    public async Task<Guid> Execute(AddContactRequest contactRequest)
-    {
-        var existingContact = await _contactRepository.GetSingleContactAsync(contactRequest.Email, contactRequest.PhoneNumber);
-
-        if (existingContact != null && existingContact.IsValid())
+        public AddContactUseCase(IUnitOfWork unitOfWork, IContactRepository repository)
         {
-            throw new InvalidOperationException(InvalidError.ContactAlreadyExists);
-        }
-        var contact = Contact.CreateContact(
             
-            contactRequest.FirstName,
-            contactRequest.LastName,
-            contactRequest.PhoneNumber,
-            contactRequest.Email
-        );
-        await _contactRepository.AddContactAsync(contact);
-        return contact.GetId();
+            _unitOfWork = unitOfWork;
+            _repository = repository;
+
+        }
+
+        public async Task<Guid> Execute(AddContactRequest contactRequest)
+        {
+            var newContact = Contact.CreateContact(
+               contactRequest.FirstName,
+               contactRequest.LastName,
+               contactRequest.PhoneNumber,
+               contactRequest.Email,
+               contactRequest.GroupId
+           );
+           
+
+            var createdContact = await _repository.GetContactByIdAsync(newContact.GetId());
+            await _unitOfWork.SaveChangesAsync();
+
+            return createdContact.GetId();
+
+        }
+
     }
 }

@@ -1,12 +1,12 @@
 ﻿
-namespace Contact.App.Core.ContactApp.Entity;
+namespace Contact.App.Core.ContactApp.Repository;
 
 public interface IContactRepository
 {
-    Task AddContactAsync(Contact contact);
-    Task<List<Contact>> GetContactsAsync();
+    Task AddContactAsync(Entity.Contact contact);
+    Task<List<Entity.Contact>> GetContactsAsync();
     Task DeleteContactAsync(Guid id);
-    Task<Contact> GetContactByIdAsync(Guid id);
-    Task<Contact> GetSingleContactAsync(string email, string phoneNumber);
-    Task UpdateContactAsync(Contact existingContact);
+    Task<Entity.Contact> GetContactByIdAsync(Guid id);
+    Task<Entity.Contact> GetSingleContactAsync(string email, string phoneNumber);
+    Task UpdateContactAsync(Entity.Contact existingContact);
 }

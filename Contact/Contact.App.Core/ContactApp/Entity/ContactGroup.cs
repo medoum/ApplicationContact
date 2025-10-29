@@ -5,12 +5,12 @@
         private Guid _id;
         private string _name;
         private int _contactnumbers;
-        public ContactGroup(string name,int inititialCount = 0)
+        public ContactGroup(string name)
         {
           
             _id = Guid.NewGuid();
             _name = name;
-            _contactnumbers = inititialCount;
+            _contactnumbers = 0;
         }
 
         public Guid GetId()
@@ -44,9 +44,9 @@
                 _contactnumbers--;
             }
         }
-        public static ContactGroup createGroupeContact(string name, int initialCount=0)
+        public static ContactGroup createGroupeContact(string name)
         {
-            return new ContactGroup(name, initialCount);
+            return new ContactGroup(name);
         }
     }
 }

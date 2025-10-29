@@ -10,10 +10,12 @@ public class Contact
     private string _email;
     private string _phoneNumber;
     private string _additionalPhoneNumber;
+    public Guid? _groupId;
 
     private Contact(string firstName, string lastName, string email, string phoneNumber)
     {
         _id = Guid.NewGuid(); 
+        _groupId = Guid.NewGuid();
         _firstName = firstName;
         _lastName = lastName;
         _email = email;
@@ -26,7 +28,10 @@ public class Contact
     {
         return _id;
     }
-
+    public Guid? GetGroupID()
+    {
+        return _groupId;
+    }
     public string GetFirstName()
     {
         return _firstName;
@@ -78,9 +83,11 @@ public class Contact
         return _additionalPhoneNumber;
     }
 
-    public static Contact CreateContact(string firstName, string lastName, string phoneNumber, string email)
+    public static Contact CreateContact(string firstName, string lastName, string phoneNumber, string email, Guid? groupId)
      {
-            return new Contact(firstName, lastName, email, phoneNumber);
+        var contact = new Contact(firstName, lastName, email, phoneNumber);
+        contact._groupId = groupId;
+        return contact;
      }
     public bool IsValid()
     {

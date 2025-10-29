@@ -1,4 +1,4 @@
-﻿using Contact.App.Core.ContactApp.Entity;
+﻿using Contact.App.Core.ContactApp.Repository;
 using Contact.App.Core.ContactApp.UseCase.AddContact.Request;
 using ContactApp.App.Core.Shared.Exceptions;
 

@@ -1,7 +1,7 @@
-﻿namespace Contact.App.Core.ContactApp.Entity;
-
-     public interface IGetSingleContact
-     {
-        Task<Contact> GetContact(Guid contactId);
-     }
-
+﻿namespace Contact.App.Core.ContactApp.UseCase.GetSingleContact
+{
+    public interface IGetSingleContact
+    {
+        Task<Entity.Contact> GetContact(Guid contactId);
+    }
+}

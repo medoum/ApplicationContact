@@ -12,4 +12,8 @@
     <None Remove="ContactApp\Exception\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ContactApp\Services\" />
+  </ItemGroup>
+
 </Project>

@@ -10,6 +10,8 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContact.Request
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public Guid? GroupId;
+       
 
         public static MergeContactRequest Create(string firstName, string lastName, string phoneNumber, string email)
         {
