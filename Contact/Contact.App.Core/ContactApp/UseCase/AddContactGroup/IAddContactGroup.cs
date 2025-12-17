@@ -1,10 +1,9 @@
-﻿using Contact.App.Core.ContactApp.Entity;
-
+﻿using Contact.App.Core.ContactApp.UseCase.AddContactGroup.Request;
 
 namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
 {
     public interface IAddContactGroup
     {
-        Task Execute(Entity.Contact contact, ContactGroup group);
+        Task<Guid> Execute(AddContactGroupRequest request);
     }
 }

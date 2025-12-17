@@ -9,10 +9,16 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
     public class MergeContactUseCase
     {
         private readonly IContactRepository _contactRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly AddContactToGroupUseCase _addContactToGroupUseCase;
-        public MergeContactUseCase(IContactRepository contactRepository, AddContactToGroupUseCase addContactToGroupUseCase)
+
+        public MergeContactUseCase(
+            IContactRepository contactRepository,
+            IUnitOfWork unitOfWork,
+            AddContactToGroupUseCase addContactToGroupUseCase)
         {
             _contactRepository = contactRepository;
+            _unitOfWork = unitOfWork;
             _addContactToGroupUseCase = addContactToGroupUseCase;
         }
 
@@ -20,10 +26,9 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
         {
             var existingContact = await _contactRepository.GetSingleContactAsync(request.Email, request.PhoneNumber);
 
-            if (!existingContact.IsValid())
-                throw new InvalidOperationException(InvalidError.ContactAlreadyExists);
+            if (existingContact == null || !existingContact.IsValid())
+                throw new InvalidOperationException(InvalidError.ContactNotFound);
 
-            // Orchestration dans le modèle
             bool hasChanges = existingContact.MergeWith(
                 request.FirstName,
                 request.LastName,
@@ -31,7 +36,12 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
                 request.Email
             );
 
+            if (hasChanges)
+            {
                 await _contactRepository.UpdateContactAsync(existingContact);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
             if (request.GroupId.HasValue)
             {
                 await _addContactToGroupUseCase.Execute(request.GroupId.Value, existingContact.GetId());
@@ -39,6 +49,5 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
 
             return existingContact.GetId();
         }
-
     }
 }

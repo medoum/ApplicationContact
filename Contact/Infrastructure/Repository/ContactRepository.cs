@@ -1,61 +1,64 @@
 ﻿using Contact.App.Core.ContactApp.Repository;
+using Infrastructure.Data;
+using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Contact.App.Core.ContactApp.Entity
 {
     public class ContactRepository : IContactRepository
     {
-        public static List<Contact> _contacts = [];
-        public Task AddContactAsync(Contact contact)
+        private static readonly List<Contact> _contacts = new();
+        private readonly UnitOfWork _unitOfWork;
+
+        public ContactRepository(IUnitOfWork unitOfWork)
         {
-            _contacts.Add(contact);
-            return Task.CompletedTask;
+            _unitOfWork = (UnitOfWork)unitOfWork;
         }
 
-        public Task DeleteContactAsync(Guid id)
+        public async Task AddContactAsync(Contact contact)
         {
-
-            var contact = _contacts.FirstOrDefault(u =>  u.GetId() ==  id);
-            if (contact.IsValid())
+             _unitOfWork.RegisterOperation(() =>
             {
-                _contacts.Remove(contact);
-            }
-
-            return Task.CompletedTask;
+                _contacts.Add(contact);
+            });
+           
         }
 
-        public Task<List<Contact>> GetContactsAsync()
+        public async Task DeleteContactAsync(Guid id)
         {
-            return Task.FromResult(_contacts);
-        }
-
-        public Task<Contact> GetContactByIdAsync(Guid id)
-        {
-            var contact = _contacts.FirstOrDefault(c => c.GetId() == id);
-
-            if (contact.IsValid())
+            var contact = await _context.Contacts.FindAsync(id);
+            if (contact != null && contact.IsValid())
             {
-                return Task.FromResult<Contact?>(contact);
+                _context.Contacts.Remove(contact);
             }
-
-            return Task.FromResult<Contact?>(null);
-
-
         }
 
-        public Task<Contact> GetSingleContactAsync(string email, string phoneNumber)
+        public async Task<List<Contact>> GetContactsAsync()
         {
-            var contact = _contacts.FirstOrDefault(c =>
-              (c.GetEmail().Equals(email, StringComparison.OrdinalIgnoreCase) ||
-               c.GetPhoneNumber().Equals(phoneNumber, StringComparison.OrdinalIgnoreCase)) &&
-              c.IsValid()
-          );
+            return await _context.Contacts.ToListAsync();
+        }
 
-            return Task.FromResult<Contact?>(contact);
+        public async Task<Contact> GetContactByIdAsync(Guid id)
+        {
+            return await _context.Contacts.FindAsync(id);
+        }
+
+        public async Task<Contact> GetSingleContactAsync(string email, string phoneNumber)
+        {
+            var contact = await _context.Contacts
+                .FirstOrDefaultAsync(c =>
+                    (c.GetEmail().ToLower() == email.ToLower() ||
+                     c.GetPhoneNumber().ToLower() == phoneNumber.ToLower()) &&
+                    c.IsValid()
+                );
+
+            return contact;
         }
 
         public Task UpdateContactAsync(Contact existingContact)
         {
-            throw new NotImplementedException();
+            _context.Contacts.Update(existingContact);
+            return Task.CompletedTask;
         }
     }
 }

@@ -7,18 +7,20 @@ namespace Contact.App.Core.ContactApp.UseCase.ReplaceContact
     public class ReplaceContactUseCase
     {
         private readonly IContactRepository _contactRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ReplaceContactUseCase(IContactRepository contactRepository)
+        public ReplaceContactUseCase(IContactRepository contactRepository, IUnitOfWork unitOfWork)
         {
             _contactRepository = contactRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Execute(ReplaceContactRequest request)
         {
-            var existingContact = await _contactRepository.GetSingleContactAsync(request.PhoneNumber, request.Email);
+            var existingContact = await _contactRepository.GetSingleContactAsync(request.Email, request.PhoneNumber);
 
             if (existingContact == null)
-                throw new InvalidOperationException(InvalidError.ContactAlreadyExists); 
+                throw new InvalidOperationException(InvalidError.ContactNotFound);
 
             bool hasChanges = existingContact.ReplaceWith(
                 request.FirstName,
@@ -27,10 +29,11 @@ namespace Contact.App.Core.ContactApp.UseCase.ReplaceContact
                 request.Email
             );
 
-            
-            
+            if (hasChanges)
+            {
                 await _contactRepository.UpdateContactAsync(existingContact);
-            
+                await _unitOfWork.SaveChangesAsync();
+            }
         }
     }
 }
