@@ -1,35 +1,28 @@
 ﻿using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.Repository;
-
+using Contact.App.Core.ContactApp.UseCase.AddContactGroup.Request;
 
 namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
 {
     public class AddContactGroupUseCase : IAddContactGroup
     {
-     
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IContactRepository _contactRepository;
+        private readonly IContactGroupRepository _contactGroupRepository;
 
-        public AddContactGroupUseCase( IUnitOfWork unitOfWork, IContactRepository contactRepository)
+        public AddContactGroupUseCase(IUnitOfWork unitOfWork, IContactGroupRepository contactGroupRepository)
         {
-          
             _unitOfWork = unitOfWork;
-            _contactRepository = contactRepository; 
+            _contactGroupRepository = contactGroupRepository;
         }
 
-        public async Task Execute(Entity.Contact contact, ContactGroup group)
+        public async Task<Guid> Execute(AddContactGroupRequest request)
         {
-          
-            await _contactRepository.AddContactAsync(
-                contact.GetFirstName(),
-                contact.GetLastName(),
-                contact.GetEmail(),
-                contact.GetPhoneNumber(),
-                group.GetId()
-            );
+            var newGroup = ContactGroup.Create(request.Name);
 
-
+            await _contactGroupRepository.AddAsync(newGroup);
             await _unitOfWork.SaveChangesAsync();
+
+            return newGroup.GetId();
         }
     }
 }

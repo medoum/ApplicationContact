@@ -2,18 +2,14 @@
 
 namespace Contact.App.Core.ContactApp.Repository
 {
-    public interface IContactGRoupRepository
+    public interface IContactGroupRepository
     {
-        Task<ContactGroup> GetByIdAsync(Guid id);
+        Task<ContactGroup?> GetByIdAsync(Guid id);
         Task<List<ContactGroup>> GetAllAsync();
-
         Task AddAsync(ContactGroup contactGroup);
-
-        Task DeleteAsync(Guid id);
         Task UpdateAsync(ContactGroup contactGroup);
+        Task DeleteAsync(Guid id);
 
-        Task<ContactGroup> GetSingleContact(string Name);
-
-
+        Task<ContactGroup?> GetByNameAsync(string name);
     }
 }
