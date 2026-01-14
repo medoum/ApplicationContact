@@ -2,6 +2,7 @@
 using Contact.App.Core.ContactApp.Repository;
 using Contact.App.Core.ContactApp.UseCase.AddContact.Request;
 using Contact.App.Core.ContactApp.UseCase.AddContactToGroup;
+using Contact.App.Core.ContactApp.UseCase.MergeContact.Request;
 using ContactApp.App.Core.Shared.Exceptions;
 
 namespace Contact.App.Core.ContactApp.UseCase.MergeContact
@@ -24,12 +25,13 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
 
         public async Task<Guid> Execute(MergeContactRequest request)
         {
-            var existingContact = await _contactRepository.GetSingleContactAsync(request.Email, request.PhoneNumber);
+            var existingContact = await _contactRepository
+                .GetSingleContactAsync(request.Email, request.PhoneNumber);
 
             if (existingContact == null || !existingContact.IsValid())
                 throw new InvalidOperationException(InvalidError.ContactNotFound);
 
-            bool hasChanges = existingContact.MergeWith(
+            var hasChanges = existingContact.MergeWith(
                 request.FirstName,
                 request.LastName,
                 request.PhoneNumber,
@@ -44,10 +46,15 @@ namespace Contact.App.Core.ContactApp.UseCase.MergeContact
 
             if (request.GroupId.HasValue)
             {
-                await _addContactToGroupUseCase.Execute(request.GroupId.Value, existingContact.GetId());
+                await _addContactToGroupUseCase.Execute(
+                    request.GroupId.Value,
+                    existingContact.GetId()
+                );
             }
 
             return existingContact.GetId();
         }
+
+
     }
 }

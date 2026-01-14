@@ -7,9 +7,9 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
     public class AddContactGroupUseCase : IAddContactGroup
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IContactGRoupRepository _contactGroupRepository;
+        private readonly IContactGroupRepository _contactGroupRepository;
 
-        public AddContactGroupUseCase(IUnitOfWork unitOfWork, IContactGRoupRepository contactGroupRepository)
+        public AddContactGroupUseCase(IUnitOfWork unitOfWork, IContactGroupRepository contactGroupRepository)
         {
             _unitOfWork = unitOfWork;
             _contactGroupRepository = contactGroupRepository;
@@ -17,7 +17,7 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
 
         public async Task<Guid> Execute(AddContactGroupRequest request)
         {
-            var newGroup = ContactGroup.createGroupeContact(request.Name);
+            var newGroup = ContactGroup.Create(request.Name);
 
             await _contactGroupRepository.AddAsync(newGroup);
             await _unitOfWork.SaveChangesAsync();
