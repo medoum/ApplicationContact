@@ -1,39 +1,34 @@
-﻿using Application.UseCase.AddContact.Request;
+﻿using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.UseCase.AddContactGroup;
 using Contact.App.Core.ContactApp.UseCase.AddContactGroup.Request;
-using Infrastructure.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Contact.App.Infrastructure.UnitOfWork;
 
 namespace Contact.App.Tests.ContactGroup.UseCases
 {
     public class AddContactGroupUseCaseTest
     {
-        //[Fact]
-        //public async Task AddContactGroup_ShouldCorrecrGroup()
-        //{
-        //    // Arrange 
-        //    var repository = new ContactGroupRepository();
-        //    var useCase = new AddContactGroupUseCase(repository);
+        [Fact]
+        public async Task AddContactGroup_ShouldCorrecrGroup()
+        {
+            // Arrange 
+            var contactGroupRepository = new ContactGroupRepository(); 
+            var contactRepository = new ContactRepository();
+            var unitOfWork = new UnitOfWork(contactGroupRepository, contactRepository);
+            var useCase = new AddContactGroupUseCase(unitOfWork);
 
-        //    var request = AddContactGroupRequest.Create("Famille",5);
+            var request = AddContactGroupRequest.Create("Famille");
 
-        //    //Act
-        //    var resultId = await useCase.Execute(request);
+            // Act
+            var resultId = await useCase.Execute(request);
 
-        //    //Assert
-        //    var addedGRoup = await repository.GetSingleContact(request.Name);
+            //Assert
+            var addedGroup = unitOfWork.ContactGroups.GetById(resultId);
 
-
-        //    Assert.NotEqual(Guid.Empty, resultId);
-        //    Assert.NotNull(addedGRoup);
-        //    Assert.Equal("Famille", addedGRoup.GetName());
-        //    Assert.Equal(5, addedGRoup.ContactNumbers);
-        //    Assert.Equal(resultId, addedGRoup.GetId());
-        //}
-
+            Assert.NotEqual(Guid.Empty, resultId);
+            Assert.NotNull(addedGroup);
+            Assert.Equal("Famille", addedGroup.GetName());
+            Assert.Equal(5, addedGroup.ContactNumbers);
+            Assert.Equal(resultId, addedGroup.GetId());
+        }
     }
 }

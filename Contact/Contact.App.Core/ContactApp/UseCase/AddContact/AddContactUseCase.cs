@@ -6,12 +6,10 @@ namespace Contact.App.Core.ContactApp.Entity
 {
     public class AddContactUseCase : IAddContactUseCase
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IContactRepository _repository;
 
-        public AddContactUseCase(IUnitOfWork unitOfWork, IContactRepository repository)
+        public AddContactUseCase(IContactRepository repository)
         {
-            _unitOfWork = unitOfWork;
             _repository = repository;
         }
 
@@ -27,7 +25,6 @@ namespace Contact.App.Core.ContactApp.Entity
 
             await _repository.AddContactAsync(newContact);
 
-            await _unitOfWork.SaveChangesAsync();
 
             return newContact.GetId();
         }

@@ -1,9 +1,5 @@
 ﻿using Application.UseCase.AddContact.Request;
 using Contact.App.Core.ContactApp.Entity;
-using Infrastructure.Repository;
-using Xunit;
-using System;
-using System.Threading.Tasks;
 
 namespace Contact.App.Tests.Contact.UseCases
 {
@@ -13,9 +9,9 @@ namespace Contact.App.Tests.Contact.UseCases
         public async Task Execute_Should_Add_Contact_And_Return_Id()
         {
             // Arrange
-            var unitOfWork = new UnitOfWork();
-            var repository = new ContactRepository(unitOfWork);
-            var useCase = new AddContactUseCase(unitOfWork, repository);
+
+            var repository = new ContactRepository();
+            var useCase = new AddContactUseCase(repository);
 
             var groupId = Guid.NewGuid();
 
@@ -38,7 +34,7 @@ namespace Contact.App.Tests.Contact.UseCases
             Assert.NotEqual(Guid.Empty, resultId);
             Assert.NotNull(addedContact);
             Assert.Equal(resultId, addedContact!.GetId());
-            Assert.Equal(groupId, addedContact.GetGroupID());
+            Assert.Equal(groupId, addedContact.GetGroupId());
         }
     }
 }

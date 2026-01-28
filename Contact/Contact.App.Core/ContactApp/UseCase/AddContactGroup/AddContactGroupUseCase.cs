@@ -7,19 +7,17 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
     public class AddContactGroupUseCase : IAddContactGroup
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IContactGroupRepository _contactGroupRepository;
 
-        public AddContactGroupUseCase(IUnitOfWork unitOfWork, IContactGroupRepository contactGroupRepository)
+        public AddContactGroupUseCase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _contactGroupRepository = contactGroupRepository;
-        }
 
+        }
         public async Task<Guid> Execute(AddContactGroupRequest request)
         {
             var newGroup = ContactGroup.Create(request.Name);
 
-            await _contactGroupRepository.AddAsync(newGroup);
+            _unitOfWork.ContactGroups.Add(newGroup);
             await _unitOfWork.SaveChangesAsync();
 
             return newGroup.GetId();

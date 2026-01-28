@@ -4,12 +4,12 @@ namespace Contact.App.Core.ContactApp.Repository
 {
     public interface IContactGroupRepository
     {
-        Task<ContactGroup?> GetByIdAsync(Guid id);
-        Task<List<ContactGroup>> GetAllAsync();
-        Task AddAsync(ContactGroup contactGroup);
-        Task UpdateAsync(ContactGroup contactGroup);
-        Task DeleteAsync(Guid id);
-
-        Task<ContactGroup?> GetByNameAsync(string name);
+        void Add(ContactGroup contactGroup);
+        void Delete(Guid id);
+        ContactGroup? GetById(Guid id);
+        ContactGroup? GetByName(string name);
+        List<ContactGroup> GetAll();
+        void Update(ContactGroup contactGroup);
     }
+
 }

@@ -1,47 +1,28 @@
 ﻿using Contact.App.Core.ContactApp.Repository;
 
-namespace Infrastructure.Repository
+namespace Contact.App.Infrastructure.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly List<Action> _operations = new();
-        private bool _disposed = false;
+        // Repositories InMemory
+        private readonly IContactGroupRepository _contactGroupRepository;
+        private readonly IContactRepository _contactRepository;
 
-        public void RegisterOperation(Action operation)
+        public UnitOfWork(
+            IContactGroupRepository contactGroupRepository,
+            IContactRepository contactRepository)
         {
-            _operations.Add(operation);
+            _contactGroupRepository = contactGroupRepository;
+            _contactRepository = contactRepository;
         }
 
-        public Task<int> SaveChangesAsync()
+        public IContactGroupRepository ContactGroups => _contactGroupRepository;
+        public IContactRepository Contacts => _contactRepository;
+
+        public Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            try
-            {
-                
-                foreach (var operation in _operations)
-                {
-                    operation();
-                }
 
-                var operationCount = _operations.Count;
-                _operations.Clear();
-
-                return Task.FromResult(operationCount);
-            }
-            catch
-            {
-                
-                _operations.Clear();
-                throw;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!_disposed)
-            {
-                _operations.Clear();
-                _disposed = true;
-            }
+            return Task.CompletedTask;
         }
     }
 }

@@ -12,33 +12,22 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactToGroup
             IContactGroupRepository contactGroupRepository,
             IContactRepository contactRepository)
         {
-            _contactGroupRepository = contactGroupRepository
-                ?? throw new ArgumentNullException(nameof(contactGroupRepository));
-
-            _contactRepository = contactRepository
-                ?? throw new ArgumentNullException(nameof(contactRepository));
+            _contactGroupRepository = contactGroupRepository;
+            _contactRepository = contactRepository;
         }
 
-        public async Task Execute(Guid groupId, Guid contactId)
+        public async Task ExecuteAsync(Guid groupId, Guid contactId)
         {
-            if (groupId == Guid.Empty)
-                throw new ArgumentException("GroupId invalide.", nameof(groupId));
+            var group = _contactGroupRepository.GetById(groupId)
+                ?? throw new InvalidOperationException(InvalidError.GroupNotFound);
 
-            if (contactId == Guid.Empty)
-                throw new ArgumentException("ContactId invalide.", nameof(contactId));
+            var contact = await _contactRepository.GetContactByIdAsync(contactId)
+                ?? throw new InvalidOperationException(InvalidError.ContactNotFound);
 
-            var group = await _contactGroupRepository.GetByIdAsync(groupId);
-            if (group == null)
-                throw new InvalidOperationException(InvalidError.GroupNotFound);
+            group.AddContact(contact.GetId());
 
-            var contact = await _contactRepository.GetContactByIdAsync(contactId);
-            if (contact == null || !contact.IsValid())
-                throw new InvalidOperationException(InvalidError.ContactNotFound);
-
-
-            group.IncrementContacts();
-
-            await _contactGroupRepository.UpdateAsync(group);
+            _contactGroupRepository.Update(group);
         }
+
     }
 }
