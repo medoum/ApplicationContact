@@ -1,5 +1,4 @@
 ﻿using Application.UseCase.AddContact.Request;
-using Xunit;
 
 namespace Application.Tests.UseCase.AddContact.Request
 {

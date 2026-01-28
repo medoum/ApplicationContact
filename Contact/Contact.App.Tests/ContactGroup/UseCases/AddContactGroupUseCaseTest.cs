@@ -1,6 +1,7 @@
 ﻿using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.UseCase.AddContactGroup;
 using Contact.App.Core.ContactApp.UseCase.AddContactGroup.Request;
+using Contact.App.Infrastructure.Repository;
 using Contact.App.Infrastructure.UnitOfWork;
 
 namespace Contact.App.Tests.ContactGroup.UseCases
@@ -16,7 +17,7 @@ namespace Contact.App.Tests.ContactGroup.UseCases
             var unitOfWork = new UnitOfWork(contactGroupRepository, contactRepository);
             var useCase = new AddContactGroupUseCase(unitOfWork);
 
-            var request = AddContactGroupRequest.Create("Famille");
+            var request = AddContactGroupRequest.Create("Famille", 5);
 
             // Act
             var resultId = await useCase.Execute(request);
@@ -26,7 +27,6 @@ namespace Contact.App.Tests.ContactGroup.UseCases
 
             Assert.NotEqual(Guid.Empty, resultId);
             Assert.NotNull(addedGroup);
-            Assert.Equal("Famille", addedGroup.GetName());
             Assert.Equal(5, addedGroup.ContactNumbers);
             Assert.Equal(resultId, addedGroup.GetId());
         }

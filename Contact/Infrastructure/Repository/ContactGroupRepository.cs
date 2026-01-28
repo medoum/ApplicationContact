@@ -1,4 +1,6 @@
-﻿using Contact.App.Core.ContactApp.Entity;
+﻿namespace Contact.App.Infrastructure.Repository
+{
+using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.Repository;
 
 public class ContactGroupRepository : IContactGroupRepository
@@ -26,4 +28,5 @@ public class ContactGroupRepository : IContactGroupRepository
         if (index >= 0)
             _groups[index] = contactGroup;
     }
+}
 }

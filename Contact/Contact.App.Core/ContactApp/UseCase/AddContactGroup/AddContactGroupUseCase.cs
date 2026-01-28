@@ -15,7 +15,7 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactGroup
         }
         public async Task<Guid> Execute(AddContactGroupRequest request)
         {
-            var newGroup = ContactGroup.Create(request.Name);
+            var newGroup = ContactGroup.Create(request.Name, request.Contactnumbers);
 
             _unitOfWork.ContactGroups.Add(newGroup);
             await _unitOfWork.SaveChangesAsync();
