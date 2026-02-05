@@ -2,40 +2,44 @@
 {
     public class ContactGroup
     {
-        private readonly Guid _id;
-        private string _name = string.Empty; 
-        private readonly HashSet<Guid> _contactIds = new();
+        private Guid _id;
+        private string _name;
+        private int _contactNumbers;
 
-        private ContactGroup(string name, int initialCount = 0)
+        private ContactGroup(string name)
         {
             _id = Guid.NewGuid();
-            Rename(name);
-
-            for (int i = 0; i < initialCount; i++)
-            {
-                _contactIds.Add(Guid.NewGuid());
-            }
+            _name = name;
+            _contactNumbers = 0;
         }
 
         public Guid GetId() => _id;
         public string GetName() => _name;
-        public int ContactNumbers => _contactIds.Count;
+        public int ContactNumbers => _contactNumbers;
 
-        public static ContactGroup Create(string name, int initialCount = 0)
-        {
-            return new ContactGroup(name, initialCount);
-        }
         public void Rename(string name)
         {
-            _name = name;
+            if (!string.IsNullOrWhiteSpace(name))
+                _name = name;
         }
-        public void AddContact(Guid contactId)
+
+        public void IncrementContacts()
         {
-            _contactIds.Add(contactId);
+            _contactNumbers++;
         }
-        public void RemoveContact(Guid contactId)
+
+        public void DecrementContacts()
         {
-            _contactIds.Remove(contactId);
+            if (_contactNumbers > 0)
+                _contactNumbers--;
+        }
+
+        public static ContactGroup Create(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Nom du groupe invalide.");
+
+            return new ContactGroup(name);
         }
     }
 }

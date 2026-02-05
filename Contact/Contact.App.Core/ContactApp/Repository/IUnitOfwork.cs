@@ -1,9 +1,9 @@
 ﻿namespace Contact.App.Core.ContactApp.Repository
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        IContactGroupRepository ContactGroups { get; }
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
+        void RegisterOperation(Action operation);
+        Task<int> SaveChangesAsync();
     }
 
 

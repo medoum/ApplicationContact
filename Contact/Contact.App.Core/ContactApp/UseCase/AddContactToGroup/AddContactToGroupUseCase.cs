@@ -7,10 +7,11 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactToGroup
     {
         private readonly IContactGroupRepository _contactGroupRepository;
         private readonly IContactRepository _contactRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AddContactToGroupUseCase(
             IContactGroupRepository contactGroupRepository,
-            IContactRepository contactRepository)
+            IContactRepository contactRepository, IUnitOfWork unitOfWork)
         {
             _contactGroupRepository = contactGroupRepository;
             _contactRepository = contactRepository;
@@ -24,9 +25,13 @@ namespace Contact.App.Core.ContactApp.UseCase.AddContactToGroup
             var contact = await _contactRepository.GetContactByIdAsync(contactId)
                 ?? throw new InvalidOperationException(InvalidError.ContactNotFound);
 
-            group.AddContact(contact.GetId());
+            _unitOfWork.RegisterOperation(() =>
+            {
+                group.IncrementContacts();
+                _contactGroupRepository.Update(group);
+            });
 
-            _contactGroupRepository.Update(group);
+            await _unitOfWork.SaveChangesAsync();
         }
 
     }

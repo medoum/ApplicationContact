@@ -4,25 +4,44 @@ namespace Contact.App.Infrastructure.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        // Repositories InMemory
-        private readonly IContactGroupRepository _contactGroupRepository;
-        private readonly IContactRepository _contactRepository;
+        private readonly List<Action> _operations = new();
+        private bool _disposed = false;
 
-        public UnitOfWork(
-            IContactGroupRepository contactGroupRepository,
-            IContactRepository contactRepository)
+        public void RegisterOperation(Action operation)
         {
-            _contactGroupRepository = contactGroupRepository;
-            _contactRepository = contactRepository;
+            _operations.Add(operation);
         }
 
-        public IContactGroupRepository ContactGroups => _contactGroupRepository;
-        public IContactRepository Contacts => _contactRepository;
-
-        public Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        public Task<int> SaveChangesAsync()
         {
+            try
+            {
 
-            return Task.CompletedTask;
+                foreach (var operation in _operations)
+                {
+                    operation();
+                }
+
+                var operationCount = _operations.Count;
+                _operations.Clear();
+
+                return Task.FromResult(operationCount);
+            }
+            catch
+            {
+
+                _operations.Clear();
+                throw;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _operations.Clear();
+                _disposed = true;
+            }
         }
     }
 }

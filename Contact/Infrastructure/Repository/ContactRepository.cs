@@ -6,7 +6,7 @@ namespace Contact.App.Core.ContactApp.Entity
     {
         private readonly List<Contact> _contacts = new();
 
-        public Task AddContactAsync(Contact contact)
+        public Task AddAsync(Contact contact)
         {          
                 _contacts.Add(contact);
             

@@ -6,16 +6,16 @@ namespace Contact.App.Core.ContactApp.Entity
 {
     public class AddContactUseCase : IAddContactUseCase
     {
-        private readonly IContactRepository _repository;
+        private readonly IContactRepository _contRepository;
 
-        public AddContactUseCase(IContactRepository repository)
+        public AddContactUseCase(IContactRepository contRepository)
         {
-            _repository = repository;
+            _contRepository = contRepository;
         }
 
         public async Task<Guid> Execute(AddContactRequest contactRequest)
         {
-            var newContact = Contact.CreateContact(
+            var newContact = Contact.Create(
                 contactRequest.FirstName,
                 contactRequest.LastName,
                 contactRequest.PhoneNumber,
@@ -23,7 +23,7 @@ namespace Contact.App.Core.ContactApp.Entity
                 contactRequest.GroupId
             );
 
-            await _repository.AddContactAsync(newContact);
+            await _contRepository.AddAsync(newContact);
 
 
             return newContact.GetId();
