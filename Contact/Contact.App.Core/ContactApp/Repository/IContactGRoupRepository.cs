@@ -1,15 +1,16 @@
 ﻿using Contact.App.Core.ContactApp.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Contact.App.Core.ContactApp.Repository
 {
     public interface IContactGroupRepository
     {
-        void Add(ContactGroup contactGroup);
-        void Delete(Guid id);
-        ContactGroup? GetById(Guid id);
-        ContactGroup? GetByName(string name);
-        List<ContactGroup> GetAll();
-        void Update(ContactGroup contactGroup);
+        Task<ContactGroup> GetById(Guid id);
+        Task Update(ContactGroup group);
     }
 
 }

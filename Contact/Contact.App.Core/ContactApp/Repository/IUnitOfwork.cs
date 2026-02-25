@@ -1,10 +1,8 @@
 ﻿namespace Contact.App.Core.ContactApp.Repository
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
-        void RegisterOperation(Action operation);
-        Task<int> SaveChangesAsync();
+        Task CommitAsync();
     }
-
 
 }

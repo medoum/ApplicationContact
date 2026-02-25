@@ -4,66 +4,37 @@ namespace Contact.App.Core.ContactApp.Entity
 {
     public class ContactRepository : IContactRepository
     {
-        private readonly List<Contact> _contacts = new();
+        private readonly Dictionary<Guid, Contact> _storage = new();
 
-        public Task AddAsync(Contact contact)
-        {          
-                _contacts.Add(contact);
-            
-            return Task.CompletedTask;
-        }
-
-        public Task DeleteContactAsync(Guid id)
+        public Task<Contact> GetById(Guid id)
         {
-             var contact = _contacts.FirstOrDefault(c => c.GetId() == id);
-              
-          
-            return Task.CompletedTask;
-        }
-
-        public Task<List<Contact>> GetContactsAsync()
-        {
-            var contacts = _contacts
-                .Where(c => c.IsValid())
-                .ToList();
-
-            return Task.FromResult(contacts);
-        }
-
-        public Task<Contact?> GetContactByIdAsync(Guid id)
-        {
-            if (id == Guid.Empty)
-                throw new ArgumentException("L'ID ne peut pas être vide.", nameof(id));
-
-            var contact = _contacts.FirstOrDefault(c =>
-                c.GetId() == id && c.IsValid());
+            _storage.TryGetValue(id, out var contact);
 
             return Task.FromResult(contact);
         }
 
-        public Task<Contact?> GetSingleContactAsync(string email, string phoneNumber)
+        public Task Add(Contact contact)
         {
-           
-            var contact = _contacts.FirstOrDefault(c =>
-                c.IsValid() 
-            );
+            if (contact == null)
+                throw new ArgumentNullException(nameof(contact));
 
-            return Task.FromResult(contact);
+            if (_storage.ContainsKey(contact.Id))
+                throw new InvalidOperationException("Contact déjà existant.");
+
+            _storage[contact.Id] = contact;
+
+            return Task.CompletedTask;
         }
 
-        public Task UpdateContactAsync(Contact existingContact)
+        public Task Update(Contact contact)
         {
-          
-                var index = _contacts.FindIndex(c =>
-                    c.GetId() == existingContact.GetId());
+            if (contact == null)
+                throw new ArgumentNullException(nameof(contact));
 
-                if (index == -1)
-                    throw new InvalidOperationException(
-                        $"Le contact avec l'ID {existingContact.GetId()} n'existe pas."
-                    );
+            if (!_storage.ContainsKey(contact.Id))
+                throw new InvalidOperationException("Contact introuvable.");
 
-                _contacts[index] = existingContact;
-      
+            _storage[contact.Id] = contact;
 
             return Task.CompletedTask;
         }

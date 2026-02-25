@@ -3,30 +3,40 @@
 using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.Repository;
 
-public class ContactGroupRepository : IContactGroupRepository
-{
-    private readonly List<ContactGroup> _groups = new();
-
-    public void Add(ContactGroup contactGroup)
-        => _groups.Add(contactGroup);
-
-    public void Delete(Guid id)
-        => _groups.RemoveAll(g => g.GetId() == id);
-
-    public ContactGroup? GetById(Guid id)
-        => _groups.FirstOrDefault(g => g.GetId() == id);
-
-    public ContactGroup? GetByName(string name)
-        => _groups.FirstOrDefault(g => g.GetName() == name);
-
-    public List<ContactGroup> GetAll()
-        => _groups.ToList();
-
-    public void Update(ContactGroup contactGroup)
+    public class ContactGroupRepository : IContactGroupRepository
     {
-        var index = _groups.FindIndex(g => g.GetId() == contactGroup.GetId());
-        if (index >= 0)
-            _groups[index] = contactGroup;
+        private readonly Dictionary<Guid, ContactGroup> _storage = new();
+
+        public Task<ContactGroup> GetById(Guid id)
+        {
+            _storage.TryGetValue(id, out var group);
+            return Task.FromResult(group);
+        }
+
+        public Task Update(ContactGroup group)
+        {
+            if (group == null)
+                throw new ArgumentNullException(nameof(group));
+
+            if (!_storage.ContainsKey(group.Id))
+                throw new InvalidOperationException("Groupe introuvable.");
+
+            _storage[group.Id] = group;
+
+            return Task.CompletedTask;
+        }
+
+        // BONUS — utile pour initialisation ou tests
+        public Task Add(ContactGroup group)
+        {
+            if (group == null)
+                throw new ArgumentNullException(nameof(group));
+
+            if (!_storage.TryAdd(group.Id, group))
+                throw new InvalidOperationException("Groupe déjà existant.");
+
+            return Task.CompletedTask;
+        }
     }
-}
+
 }
