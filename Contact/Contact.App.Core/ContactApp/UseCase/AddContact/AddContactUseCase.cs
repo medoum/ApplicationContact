@@ -18,14 +18,20 @@ public class AddContactToGroupUseCase
 
     public async Task Execute(Guid contactId, Guid groupId)
     {
-        //var contact = await _contactRepository.GetById(contactId);
-
+        var contact = await _contactRepository.GetById(contactId);
         var group = await _groupRepository.GetById(groupId);
+
+        // ✅ sécurité (best practice)
+        if (contact == null)
+            throw new Exception("Contact not found");
+
+        if (group == null)
+            throw new Exception("Group not found");
 
         var added = contact.AddToGroup(groupId);
 
         if (!added)
-            return; 
+            return;
 
         group.IncrementContacts();
 
