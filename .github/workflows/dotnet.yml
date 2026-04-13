@@ -1,7 +1,4 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: .NET
+name: .NET CI Pipeline
 
 on:
   push:
@@ -14,15 +11,44 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Contact
+
     steps:
-    - uses: actions/checkout@v4
+    # 1. Checkout du code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Setup .NET
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 10.0.x
+        dotnet-version: 8.0.x
+
+    # 3. Infos debug (optionnel mais utile)
+    - name: Display .NET info
+      run: dotnet --info
+
+    # 4. Restore
     - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet restore Contact.sln
+
+    # 5. Build
+    - name: Build project
+      run: dotnet build Contact.sln --no-restore --configuration Release
+
+    # 6. Tests
+    - name: Run tests
+      run: dotnet test Contact.sln --no-build --configuration Release --verbosity normal
+
+    # 7. Publish (préparation pour déploiement)
+    - name: Publish app
+      run: dotnet publish Contact.sln --configuration Release --output ./publish
+
+    # 8. Upload artifact (important pour CD)
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dotnet-app
+        path: Contact/publish
