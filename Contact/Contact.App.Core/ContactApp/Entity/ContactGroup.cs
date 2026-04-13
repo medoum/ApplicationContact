@@ -1,45 +1,38 @@
-﻿namespace Contact.App.Core.ContactApp.Entity
+﻿namespace Contact.App.Core.ContactApp.Entity;
+
+public class ContactGroup
 {
-    public class ContactGroup
+    private Guid _id;
+    private string _name;
+    private bool _isDefault;
+    private int _contactsCount;
+
+    private ContactGroup(string name, bool isDefault = false)
     {
-        private Guid _id;
-        private string _name;
-        private int _contactNumbers;
+        _id = Guid.NewGuid();
+        _name = name;
+        _isDefault = isDefault;
+        _contactsCount = 0;
+    }
 
-        private ContactGroup(string name)
-        {
-            _id = Guid.NewGuid();
-            _name = name;
-            _contactNumbers = 0;
-        }
+    public Guid Id => _id;
+    public string Name => _name;
+    public bool IsDefault => _isDefault;
+    public int ContactsCount => _contactsCount;
 
-        public Guid GetId() => _id;
-        public string GetName() => _name;
-        public int ContactNumbers => _contactNumbers;
+    public static ContactGroup Create(string name, bool isDefault = false)
+        => new ContactGroup(name, isDefault);
 
-        public void Rename(string name)
-        {
-            if (!string.IsNullOrWhiteSpace(name))
-                _name = name;
-        }
+    public void IncrementContacts()
+    {
+        _contactsCount++;
+    }
 
-        public void IncrementContacts()
-        {
-            _contactNumbers++;
-        }
+    public void DecrementContacts()
+    {
+        if (_contactsCount == 0)
+            throw new Exception("Impossible de décrémenter. Compteur déjà à 0.");
 
-        public void DecrementContacts()
-        {
-            if (_contactNumbers > 0)
-                _contactNumbers--;
-        }
-
-        public static ContactGroup Create(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Nom du groupe invalide.");
-
-            return new ContactGroup(name);
-        }
+        _contactsCount--;
     }
 }

@@ -1,35 +1,37 @@
-﻿using Application.UseCase.AddContact.Request;
-using Contact.App.Core.ContactApp.Repository;
-using ContactApp.App.Core.Contact.UseCase.AddContact;
+﻿using Contact.App.Core.ContactApp.Repository;
 
-namespace Contact.App.Core.ContactApp.Entity
+public class AddContactToGroupUseCase
 {
-    public class AddContactUseCase : IAddContactUseCase
+    private readonly IContactRepository _contactRepository;
+    private readonly IContactGroupRepository _groupRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public AddContactToGroupUseCase(
+        IContactRepository contactRepository,
+        IContactGroupRepository groupRepository,
+        IUnitOfWork unitOfWork)
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IContactRepository _repository;
+        _contactRepository = contactRepository;
+        _groupRepository = groupRepository;
+        _unitOfWork = unitOfWork;
+    }
 
-        public AddContactUseCase(IUnitOfWork unitOfWork, IContactRepository repository)
-        {
-            _unitOfWork = unitOfWork;
-            _repository = repository;
-        }
+    public async Task Execute(Guid contactId, Guid groupId)
+    {
+        //var contact = await _contactRepository.GetById(contactId);
 
-        public async Task<Guid> Execute(AddContactRequest contactRequest)
-        {
-            var newContact = Contact.CreateContact(
-                contactRequest.FirstName,
-                contactRequest.LastName,
-                contactRequest.PhoneNumber,
-                contactRequest.Email,
-                contactRequest.GroupId
-            );
+        var group = await _groupRepository.GetById(groupId);
 
-            await _repository.AddContactAsync(newContact);
+        var added = contact.AddToGroup(groupId);
 
-            await _unitOfWork.SaveChangesAsync();
+        if (!added)
+            return; 
 
-            return newContact.GetId();
-        }
+        group.IncrementContacts();
+
+        await _contactRepository.Update(contact);
+        await _groupRepository.Update(group);
+
+        await _unitOfWork.CommitAsync();
     }
 }

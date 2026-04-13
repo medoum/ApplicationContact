@@ -1,44 +1,53 @@
-﻿using Application.UseCase.AddContact.Request;
-using Contact.App.Core.ContactApp.Entity;
-using Infrastructure.Repository;
-using Xunit;
-using System;
-using System.Threading.Tasks;
+﻿using Contact.App.Core.ContactApp.Entity;
+using Contact.App.Infrastructure.Repository;
+using Contact.App.Infrastructure.UnitOfWork;
 
 namespace Contact.App.Tests.Contact.UseCases
 {
     public class AddContactUseCaseTest
     {
+
         [Fact]
-        public async Task Execute_Should_Add_Contact_And_Return_Id()
+        public async Task Execute_Should_Add_Contact_To_Group_And_Increment_Count()
         {
             // Arrange
+            var contactRepository = new ContactRepository();
+            var groupRepository = new ContactGroupRepository();
             var unitOfWork = new UnitOfWork();
-            var repository = new ContactRepository(unitOfWork);
-            var useCase = new AddContactUseCase(unitOfWork, repository);
 
-            var groupId = Guid.NewGuid();
+            var group = ContactGroup.Create("Friends");
+            await groupRepository.Add(group);
 
-            var request = AddContactRequest.Create(
-                firstName: "Mohamed",
-                lastName: "Doumbouya",
-                phoneNumber: "0585545",
-                email: "mo@gmail.com",
-                groupId: groupId
+            var contact = Core.ContactApp.Entity.Contact.Create(
+                "Med",
+                "Doum",
+                "0600000000",
+                "med@mail.com",
+                group.Id 
             );
+
+            await contactRepository.Add(contact);
+
+            var useCase = new AddContactToGroupUseCase(
+                contactRepository,
+                groupRepository,
+                unitOfWork
+            );
+
+            var newGroup = ContactGroup.Create("Work");
+            await groupRepository.Add(newGroup);
 
             // Act
-            var resultId = await useCase.Execute(request);
-            var addedContact = await repository.GetSingleContactAsync(
-                request.Email,
-                request.PhoneNumber
-            );
+            await useCase.Execute(contact.Id, newGroup.Id);
 
             // Assert
-            Assert.NotEqual(Guid.Empty, resultId);
-            Assert.NotNull(addedContact);
-            Assert.Equal(resultId, addedContact!.GetId());
-            Assert.Equal(groupId, addedContact.GetGroupID());
+            var updatedContact = await contactRepository.GetById(contact.Id);
+            var updatedGroup = await groupRepository.GetById(newGroup.Id);
+
+            Assert.Contains(newGroup.Id, updatedContact.GroupIds);
+            Assert.Equal(1, updatedGroup.ContactsCount);
+            Assert.True(unitOfWork.IsCommitted);
         }
+
     }
 }

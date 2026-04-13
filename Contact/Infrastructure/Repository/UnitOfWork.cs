@@ -1,47 +1,22 @@
 ﻿using Contact.App.Core.ContactApp.Repository;
 
-namespace Infrastructure.Repository
+namespace Contact.App.Infrastructure.UnitOfWork
 {
+    using Contact.App.Core.ContactApp.Repository;
+
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly List<Action> _operations = new();
-        private bool _disposed = false;
+        private bool _committed;
 
-        public void RegisterOperation(Action operation)
+        public bool IsCommitted => _committed;
+
+        public Task CommitAsync()
         {
-            _operations.Add(operation);
-        }
+        
+            _committed = true;
 
-        public Task<int> SaveChangesAsync()
-        {
-            try
-            {
-                
-                foreach (var operation in _operations)
-                {
-                    operation();
-                }
-
-                var operationCount = _operations.Count;
-                _operations.Clear();
-
-                return Task.FromResult(operationCount);
-            }
-            catch
-            {
-                
-                _operations.Clear();
-                throw;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!_disposed)
-            {
-                _operations.Clear();
-                _disposed = true;
-            }
+            return Task.CompletedTask;
         }
     }
+
 }

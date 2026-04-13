@@ -1,81 +1,42 @@
-﻿using Contact.App.Core.ContactApp.Entity;
+﻿namespace Contact.App.Infrastructure.Repository
+{
+using Contact.App.Core.ContactApp.Entity;
 using Contact.App.Core.ContactApp.Repository;
 
-namespace Infrastructure.Repository
-{
     public class ContactGroupRepository : IContactGroupRepository
     {
-        private readonly List<ContactGroup> _groups = new();
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly Dictionary<Guid, ContactGroup> _storage = new();
 
-        public ContactGroupRepository(IUnitOfWork unitOfWork)
+        public Task<ContactGroup> GetById(Guid id)
         {
-            _unitOfWork = unitOfWork
-                ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _storage.TryGetValue(id, out var group);
+            return Task.FromResult(group);
         }
 
-        public Task AddAsync(ContactGroup contactGroup)
+        public Task Update(ContactGroup group)
         {
-            if (contactGroup == null)
-                throw new ArgumentNullException(nameof(contactGroup));
+            if (group == null)
+                throw new ArgumentNullException(nameof(group));
 
-            _unitOfWork.RegisterOperation(() =>
-            {
-                _groups.Add(contactGroup);
-            });
+            if (!_storage.ContainsKey(group.Id))
+                throw new InvalidOperationException("Groupe introuvable.");
+
+            _storage[group.Id] = group;
 
             return Task.CompletedTask;
         }
 
-        public Task DeleteAsync(Guid id)
+        // BONUS — utile pour initialisation ou tests
+        public Task Add(ContactGroup group)
         {
-            _unitOfWork.RegisterOperation(() =>
-            {
-                var group = _groups.FirstOrDefault(g => g.GetId() == id);
-                if (group != null)
-                {
-                    _groups.Remove(group);
-                }
-            });
+            if (group == null)
+                throw new ArgumentNullException(nameof(group));
 
-            return Task.CompletedTask;
-        }
-
-        public Task<List<ContactGroup>> GetAllAsync()
-        {
-            return Task.FromResult(_groups.ToList());
-        }
-
-        public Task<ContactGroup?> GetByIdAsync(Guid id)
-        {
-            var group = _groups.FirstOrDefault(g => g.GetId() == id);
-            return Task.FromResult(group);
-        }
-
-        public Task<ContactGroup?> GetByNameAsync(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Le nom du groupe est invalide.", nameof(name));
-
-            var group = _groups.FirstOrDefault(g => g.GetName() == name);
-            return Task.FromResult(group);
-        }
-
-        public Task UpdateAsync(ContactGroup contactGroup)
-        {
-            if (contactGroup == null)
-                throw new ArgumentNullException(nameof(contactGroup));
-
-            _unitOfWork.RegisterOperation(() =>
-            {
-                var index = _groups.FindIndex(g => g.GetId() == contactGroup.GetId());
-                if (index >= 0)
-                {
-                    _groups[index] = contactGroup;
-                }
-            });
+            if (!_storage.TryAdd(group.Id, group))
+                throw new InvalidOperationException("Groupe déjà existant.");
 
             return Task.CompletedTask;
         }
     }
+
 }
